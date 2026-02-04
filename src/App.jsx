@@ -1,8 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import BrowserFrame from './components/BrowserFrame'
 import './App.css'
 
 function App() {
+  // #region agent log
+  if (window.__addDebugLog__) window.__addDebugLog__('App.jsx:render', {});
+  // #endregion
+
+  useEffect(() => {
+    // #region agent log
+    if (window.__addDebugLog__) window.__addDebugLog__('App.jsx:mounted', { 
+      appEl: !!document.querySelector('.app'), 
+      testContainer: !!document.querySelector('.test-container'),
+      browserFrame: !!document.querySelector('.browser-frame')
+    });
+    // #endregion
+  }, []);
+
   return (
     <div className="app">
       <div className="test-container">
