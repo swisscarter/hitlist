@@ -1,0 +1,179 @@
+/* Browser Frame - iPhone 14 Pro style mobile frame */
+.browser-frame {
+  position: relative;
+  width: 393px;
+  height: 852px;
+  background-color: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================
+   STATUS BAR
+   ============================================ */
+.browser-frame__status-bar {
+  width: 100%;
+  height: 59px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+/* Left Side - Time */
+.browser-frame__status-left {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 0 3px 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.browser-frame__time-container {
+  width: 54px;
+  height: 21px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.browser-frame__time {
+  font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3125;
+  text-align: center;
+  color: #ffffff;
+  letter-spacing: -0.32px;
+}
+
+/* Dynamic Island */
+.browser-frame__dynamic-island {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.browser-frame__dynamic-island-pill {
+  width: 125px;
+  height: 37px;
+  background-color: #000000;
+  border-radius: 100px;
+  position: relative;
+  opacity: 0; /* Hidden by default as in the design */
+}
+
+.browser-frame__truedepth-camera {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 80px;
+  height: 37px;
+  background-color: #000000;
+  border-radius: 100px;
+}
+
+.browser-frame__facetime-camera {
+  position: absolute;
+  left: 88px;
+  top: 0;
+  width: 37px;
+  height: 37px;
+  background-color: #000000;
+  border-radius: 100px;
+}
+
+/* Right Side - Signal, WiFi, Battery */
+.browser-frame__status-right {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  gap: 8px;
+  padding: 0 11px 0 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.browser-frame__signal-wifi-battery {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.browser-frame__icon-signal {
+  width: 18px;
+  height: 12px;
+  color: #ffffff;
+}
+
+/* Battery */
+.browser-frame__battery {
+  position: relative;
+  width: 27.4px;
+  height: 13px;
+}
+
+.browser-frame__battery-outline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 25px;
+  height: 13px;
+  color: #ffffff;
+}
+
+.browser-frame__battery-end {
+  position: absolute;
+  top: 4px;
+  left: 26px;
+  width: 2px;
+  height: 5px;
+  color: #ffffff;
+}
+
+.browser-frame__battery-fill {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 21px;
+  height: 9px;
+  background-color: #ffffff;
+  border-radius: 1.5px;
+}
+
+/* ============================================
+   MAIN CONTENT AREA
+   ============================================ */
+.browser-frame__content {
+  flex: 1;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ============================================
+   HOME INDICATOR
+   ============================================ */
+.browser-frame__home-indicator {
+  width: 100%;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.browser-frame__home-indicator-bar {
+  width: 134px;
+  height: 5px;
+  background-color: #ffffff;
+  border-radius: 100px;
+  margin-top: 8px;
+}
