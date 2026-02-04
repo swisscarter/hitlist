@@ -1,24 +1,7 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import './BrowserFrame.css'
 
 export default function BrowserFrame({ children }) {
-  // #region agent log
-  if (window.__addDebugLog__) window.__addDebugLog__('BrowserFrame:render', { hasChildren: !!children });
-  // #endregion
-
-  useEffect(() => {
-    // #region agent log
-    const frame = document.querySelector('.browser-frame');
-    if (window.__addDebugLog__) window.__addDebugLog__('BrowserFrame:mounted', { 
-      frameExists: !!frame, 
-      frameHeight: frame?.offsetHeight,
-      frameWidth: frame?.offsetWidth,
-      frameDisplay: frame ? getComputedStyle(frame).display : null,
-      frameVisibility: frame ? getComputedStyle(frame).visibility : null
-    });
-    // #endregion
-  }, []);
-
   return (
     <div className="browser-frame" data-name="Browser-frame">
       {/* Status Bar */}
