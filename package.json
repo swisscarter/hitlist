@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Portfolio Projects component",
   "type": "module",
-  "homepage": "https://github.com/user/browser-frame-demo",
+  "homepage": "https://swisscarter.github.io/hitlist",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
