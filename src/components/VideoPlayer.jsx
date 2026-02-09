@@ -1,15 +1,44 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import './VideoPlayer.css'
 
 export default function VideoPlayer() {
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [showControls, setShowControls] = useState(true)
 
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen)
+    setShowControls(true) // Always show controls on toggle
   }
 
+  // Auto-hide controls in fullscreen mode
+  useEffect(() => {
+    if (!isFullscreen) return
+
+    let timeout
+    const hideControls = () => {
+      timeout = setTimeout(() => {
+        setShowControls(false)
+      }, 3000)
+    }
+
+    hideControls()
+
+    return () => clearTimeout(timeout)
+  }, [isFullscreen, showControls])
+
+  // Handle user interaction in fullscreen mode
+  const handleInteraction = useCallback(() => {
+    if (isFullscreen) {
+      setShowControls(true)
+    }
+  }, [isFullscreen])
+
   return (
-    <div className="video-player">
+    <div 
+      className="video-player"
+      onClick={handleInteraction}
+      onTouchStart={handleInteraction}
+    >
       {/* Media Area with gradient overlay */}
       <div className="video-player__media">
         <div className="video-player__gradient" />
@@ -17,7 +46,10 @@ export default function VideoPlayer() {
 
       {/* Bottom Section - changes based on fullscreen state */}
       {isFullscreen ? (
-        <FullscreenBottom onExitFullscreen={toggleFullscreen} />
+        <FullscreenBottom 
+          onExitFullscreen={toggleFullscreen} 
+          visible={showControls}
+        />
       ) : (
         <MainBottom onFullscreen={toggleFullscreen} />
       )}
@@ -103,10 +135,15 @@ function MainBottom({ onFullscreen }) {
   )
 }
 
-/* Fullscreen Bottom - simplified view */
-function FullscreenBottom({ onExitFullscreen }) {
+/* Fullscreen Bottom - simplified view with auto-hide */
+function FullscreenBottom({ onExitFullscreen, visible }) {
+  const handleExitClick = (e) => {
+    e.stopPropagation() // Prevent triggering parent's onClick
+    onExitFullscreen()
+  }
+
   return (
-    <div className="video-player__bottom video-player__bottom--fullscreen">
+    <div className={`video-player__bottom video-player__bottom--fullscreen ${visible ? '' : 'video-player__bottom--hidden'}`}>
       {/* Left - Volume */}
       <div className="video-player__fs-left">
         <div className="video-player__fs-icon">
@@ -140,7 +177,7 @@ function FullscreenBottom({ onExitFullscreen }) {
         </div>
 
         {/* Exit Fullscreen */}
-        <div className="video-player__fs-icon video-player__fs-icon--clickable" onClick={onExitFullscreen}>
+        <div className="video-player__fs-icon video-player__fs-icon--clickable" onClick={handleExitClick}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path d="M4 8H8V4" stroke="rgba(255,255,255,0.5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             <path d="M20 8H16V4" stroke="rgba(255,255,255,0.5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
