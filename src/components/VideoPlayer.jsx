@@ -7,17 +7,16 @@ export default function VideoPlayer({
   episode = 'Episode Name',
   likes = '246k',
   comments = '1.9k',
-  episodeNum = 1
+  episodeNum = 1,
+  isFullscreen,
+  onToggleFullscreen,
+  controlsVisible,
+  onShowControls,
+  onHideControls
 }) {
-  const [isFullscreen, setIsFullscreen] = useState(false)
-  const [showControls, setShowControls] = useState(true)
   const [progress, setProgress] = useState(0)
   const videoRef = useRef(null)
-
-  const toggleFullscreen = () => {
-    setIsFullscreen(!isFullscreen)
-    setShowControls(true)
-  }
+  const hideTimeoutRef = useRef(null)
 
   // Update progress bar based on video time
   useEffect(() => {
@@ -36,32 +35,38 @@ export default function VideoPlayer({
 
   // Auto-hide controls in fullscreen mode
   useEffect(() => {
-    if (!isFullscreen) return
+    if (!isFullscreen || !controlsVisible) return
 
-    let timeout
-    const hideControls = () => {
-      timeout = setTimeout(() => {
-        setShowControls(false)
-      }, 2000)
+    // Clear any existing timeout
+    if (hideTimeoutRef.current) {
+      clearTimeout(hideTimeoutRef.current)
     }
 
-    hideControls()
+    // Set new timeout to hide controls
+    hideTimeoutRef.current = setTimeout(() => {
+      onHideControls()
+    }, 2000)
 
-    return () => clearTimeout(timeout)
-  }, [isFullscreen, showControls])
+    return () => {
+      if (hideTimeoutRef.current) {
+        clearTimeout(hideTimeoutRef.current)
+      }
+    }
+  }, [isFullscreen, controlsVisible, onHideControls])
 
-  // Handle user interaction in fullscreen mode
-  const handleInteraction = useCallback(() => {
+  // Handle user tap/interaction (not scroll)
+  const handleTap = useCallback((e) => {
+    // Only respond to taps in fullscreen mode
     if (isFullscreen) {
-      setShowControls(true)
+      e.stopPropagation()
+      onShowControls()
     }
-  }, [isFullscreen])
+  }, [isFullscreen, onShowControls])
 
   return (
     <div 
       className="video-player"
-      onClick={handleInteraction}
-      onTouchStart={handleInteraction}
+      onClick={handleTap}
     >
       {/* Media Area with video */}
       <div className="video-player__media">
@@ -79,13 +84,13 @@ export default function VideoPlayer({
       {/* Bottom Section - changes based on fullscreen state */}
       {isFullscreen ? (
         <FullscreenBottom 
-          onExitFullscreen={toggleFullscreen} 
-          visible={showControls}
+          onExitFullscreen={onToggleFullscreen} 
+          visible={controlsVisible}
           episodeNum={episodeNum}
         />
       ) : (
         <MainBottom 
-          onFullscreen={toggleFullscreen}
+          onFullscreen={onToggleFullscreen}
           title={title}
           episode={episode}
           likes={likes}
@@ -104,6 +109,11 @@ export default function VideoPlayer({
 
 /* Main Bottom - default view with info and actions */
 function MainBottom({ onFullscreen, title, episode, likes, comments, episodeNum }) {
+  const handleFullscreenClick = (e) => {
+    e.stopPropagation()
+    onFullscreen()
+  }
+
   return (
     <div className="video-player__bottom">
       {/* Info Section (Left) */}
@@ -163,7 +173,7 @@ function MainBottom({ onFullscreen, title, episode, likes, comments, episodeNum 
           </div>
         </div>
 
-        <div className="video-player__action" onClick={onFullscreen}>
+        <div className="video-player__action" onClick={handleFullscreenClick}>
           <div className="video-player__action-icon video-player__action-icon--clickable">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path d="M8 4H4V8M20 4H16M20 8V4M20 20V16M16 20H20M4 16V20H8" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>

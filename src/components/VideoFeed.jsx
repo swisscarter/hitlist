@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import VideoPlayer from './VideoPlayer'
 import './VideoFeed.css'
 
@@ -27,6 +27,23 @@ const videos = [
 ]
 
 export default function VideoFeed() {
+  // Shared state across all videos
+  const [isFullscreen, setIsFullscreen] = useState(false)
+  const [controlsVisible, setControlsVisible] = useState(true)
+
+  const toggleFullscreen = () => {
+    setIsFullscreen(!isFullscreen)
+    setControlsVisible(true) // Show controls when toggling fullscreen
+  }
+
+  const showControls = () => {
+    setControlsVisible(true)
+  }
+
+  const hideControls = () => {
+    setControlsVisible(false)
+  }
+
   return (
     <div className="video-feed">
       {videos.map((video, index) => (
@@ -38,6 +55,11 @@ export default function VideoFeed() {
             likes={video.likes}
             comments={video.comments}
             episodeNum={index + 1}
+            isFullscreen={isFullscreen}
+            onToggleFullscreen={toggleFullscreen}
+            controlsVisible={controlsVisible}
+            onShowControls={showControls}
+            onHideControls={hideControls}
           />
         </div>
       ))}
