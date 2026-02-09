@@ -8,6 +8,7 @@ export default function VideoPlayer({
   likes = '246k',
   comments = '1.9k',
   episodeNum = 1,
+  fit = 'contain',
   isFullscreen,
   onToggleFullscreen,
   controlsVisible,
@@ -73,6 +74,7 @@ export default function VideoPlayer({
         <video 
           ref={videoRef}
           className="video-player__video"
+          style={{ objectFit: fit }}
           src={src}
           autoPlay
           loop

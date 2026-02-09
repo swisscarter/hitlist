@@ -8,21 +8,24 @@ const videos = [
     title: 'Windmill', 
     episode: 'Nature Series',
     likes: '246k',
-    comments: '1.9k'
+    comments: '1.9k',
+    fit: 'contain'
   },
   { 
     src: '/brazil.mp4', 
     title: 'Brazil', 
     episode: 'Travel Diaries',
     likes: '892k',
-    comments: '12.4k'
+    comments: '12.4k',
+    fit: 'cover'  // Zoom to fill vertical viewport
   },
   { 
     src: '/bison.mp4', 
     title: 'Bison', 
     episode: 'Wildlife',
     likes: '1.2M',
-    comments: '8.7k'
+    comments: '8.7k',
+    fit: 'contain'
   }
 ]
 
@@ -55,6 +58,7 @@ export default function VideoFeed() {
             likes={video.likes}
             comments={video.comments}
             episodeNum={index + 1}
+            fit={video.fit}
             isFullscreen={isFullscreen}
             onToggleFullscreen={toggleFullscreen}
             controlsVisible={controlsVisible}
