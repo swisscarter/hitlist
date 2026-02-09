@@ -39,8 +39,16 @@ export default function VideoPlayer() {
       onClick={handleInteraction}
       onTouchStart={handleInteraction}
     >
-      {/* Media Area with gradient overlay */}
+      {/* Media Area with video */}
       <div className="video-player__media">
+        <video 
+          className="video-player__video"
+          src="/penguin.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
         <div className="video-player__gradient" />
       </div>
 
