@@ -1,14 +1,31 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import './VideoPlayer.css'
 
 export default function VideoPlayer() {
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [showControls, setShowControls] = useState(true)
+  const [progress, setProgress] = useState(0)
+  const videoRef = useRef(null)
 
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen)
-    setShowControls(true) // Always show controls on toggle
+    setShowControls(true)
   }
+
+  // Update progress bar based on video time
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    const updateProgress = () => {
+      if (video.duration) {
+        setProgress((video.currentTime / video.duration) * 100)
+      }
+    }
+
+    video.addEventListener('timeupdate', updateProgress)
+    return () => video.removeEventListener('timeupdate', updateProgress)
+  }, [])
 
   // Auto-hide controls in fullscreen mode
   useEffect(() => {
@@ -42,14 +59,14 @@ export default function VideoPlayer() {
       {/* Media Area with video */}
       <div className="video-player__media">
         <video 
+          ref={videoRef}
           className="video-player__video"
-          src="/penguin.mp4"
+          src="/windmill.mp4"
           autoPlay
           loop
           muted
           playsInline
         />
-        <div className="video-player__gradient" />
       </div>
 
       {/* Bottom Section - changes based on fullscreen state */}
@@ -64,7 +81,7 @@ export default function VideoPlayer() {
 
       {/* Progress Bar */}
       <div className="video-player__progress-bar">
-        <div className="video-player__progress-fill" style={{ width: '18%' }} />
+        <div className="video-player__progress-fill" style={{ width: `${progress}%` }} />
       </div>
     </div>
   )
@@ -146,7 +163,7 @@ function MainBottom({ onFullscreen }) {
 /* Fullscreen Bottom - simplified view with auto-hide */
 function FullscreenBottom({ onExitFullscreen, visible }) {
   const handleExitClick = (e) => {
-    e.stopPropagation() // Prevent triggering parent's onClick
+    e.stopPropagation()
     onExitFullscreen()
   }
 
