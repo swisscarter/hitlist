@@ -190,6 +190,87 @@
   padding: 0 12px;
 }
 
+/* ==================== CLICKABLE ICONS ==================== */
+.video-player__action-icon--clickable,
+.video-player__fs-icon--clickable {
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.video-player__action-icon--clickable:active,
+.video-player__fs-icon--clickable:active {
+  transform: scale(0.9);
+  opacity: 0.7;
+}
+
+/* ==================== FULLSCREEN BOTTOM ==================== */
+.video-player__bottom--fullscreen {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: auto;
+  padding: 16px;
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
+}
+
+@media (min-width: 501px) {
+  .video-player__bottom--fullscreen {
+    padding-bottom: 16px;
+  }
+}
+
+.video-player__fs-left,
+.video-player__fs-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.video-player__fs-left {
+  justify-content: flex-start;
+}
+
+.video-player__fs-right {
+  justify-content: flex-end;
+}
+
+.video-player__fs-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-player__fs-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 100px;
+  background-color: rgba(255, 255, 255, 0.01);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 
+    0 2px 3.5px rgba(26, 26, 26, 0.06),
+    0 1px 1.75px rgba(26, 26, 26, 0.12);
+}
+
+.video-player__episodes-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  padding: 4px 4px 4px 8px;
+}
+
+.video-player__episodes-badge span {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
 /* ==================== PROGRESS BAR ==================== */
 .video-player__progress-bar {
   position: absolute;
