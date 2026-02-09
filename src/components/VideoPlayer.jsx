@@ -1,7 +1,14 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import './VideoPlayer.css'
 
-export default function VideoPlayer() {
+export default function VideoPlayer({ 
+  src, 
+  title = 'Show Title', 
+  episode = 'Episode Name',
+  likes = '246k',
+  comments = '1.9k',
+  episodeNum = 1
+}) {
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [showControls, setShowControls] = useState(true)
   const [progress, setProgress] = useState(0)
@@ -61,7 +68,7 @@ export default function VideoPlayer() {
         <video 
           ref={videoRef}
           className="video-player__video"
-          src="/windmill.mp4"
+          src={src}
           autoPlay
           loop
           muted
@@ -74,9 +81,17 @@ export default function VideoPlayer() {
         <FullscreenBottom 
           onExitFullscreen={toggleFullscreen} 
           visible={showControls}
+          episodeNum={episodeNum}
         />
       ) : (
-        <MainBottom onFullscreen={toggleFullscreen} />
+        <MainBottom 
+          onFullscreen={toggleFullscreen}
+          title={title}
+          episode={episode}
+          likes={likes}
+          comments={comments}
+          episodeNum={episodeNum}
+        />
       )}
 
       {/* Progress Bar */}
@@ -88,20 +103,20 @@ export default function VideoPlayer() {
 }
 
 /* Main Bottom - default view with info and actions */
-function MainBottom({ onFullscreen }) {
+function MainBottom({ onFullscreen, title, episode, likes, comments, episodeNum }) {
   return (
     <div className="video-player__bottom">
       {/* Info Section (Left) */}
       <div className="video-player__info">
         <div className="video-player__top-info">
           <div className="video-player__title-row">
-            <span className="video-player__title">Show Title</span>
+            <span className="video-player__title">{title}</span>
           </div>
           <div className="video-player__metadata">
-            <span className="video-player__episode-name">Episode Name</span>
+            <span className="video-player__episode-name">{episode}</span>
             <span className="video-player__dot">·</span>
             <div className="video-player__cta-badge">
-              <span>EP 1</span>
+              <span>EP {episodeNum}</span>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M6 12L10 8L6 4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
@@ -118,7 +133,7 @@ function MainBottom({ onFullscreen }) {
               <path d="M12 21C12.75 21 21 16.75 21 11C21 7 18.5 5 16 5C13.5 5 12 6.5 12 6.5C12 6.5 10.5 5 8 5C5.5 5 3 7 3 11C3 16.75 11.25 21 12 21Z" stroke="white" strokeWidth="2" strokeLinejoin="round"/>
             </svg>
           </div>
-          <span className="video-player__action-count">246k</span>
+          <span className="video-player__action-count">{likes}</span>
         </div>
 
         <div className="video-player__action">
@@ -127,7 +142,7 @@ function MainBottom({ onFullscreen }) {
               <path d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 13.3416 3.29356 14.6147 3.81996 15.7585C3.92989 16 3.95619 16.268 3.87805 16.5191L3.08178 19.0775C2.72598 20.2207 3.78703 21.2995 4.93596 20.9627L7.62429 20.1747C7.86584 20.1039 8.12422 20.129 8.35431 20.2311C9.46875 20.7254 10.703 21 12 21Z" stroke="white" strokeWidth="2" strokeLinejoin="round"/>
             </svg>
           </div>
-          <span className="video-player__action-count">1.9k</span>
+          <span className="video-player__action-count">{comments}</span>
         </div>
 
         <div className="video-player__action">
@@ -161,7 +176,7 @@ function MainBottom({ onFullscreen }) {
 }
 
 /* Fullscreen Bottom - simplified view with auto-hide */
-function FullscreenBottom({ onExitFullscreen, visible }) {
+function FullscreenBottom({ onExitFullscreen, visible, episodeNum }) {
   const handleExitClick = (e) => {
     e.stopPropagation()
     onExitFullscreen()
@@ -181,7 +196,7 @@ function FullscreenBottom({ onExitFullscreen, visible }) {
       {/* Center - Episodes Badge */}
       <div className="video-player__fs-center">
         <div className="video-player__episodes-badge">
-          <span>EP 1</span>
+          <span>EP {episodeNum}</span>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M6 4L10 8L6 12" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>

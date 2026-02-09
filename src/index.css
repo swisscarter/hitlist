@@ -15,7 +15,7 @@ body {
   background-color: #000000;
 }
 
-/* Mobile: full viewport, no scroll */
+/* Mobile: full viewport */
 @media (max-width: 500px) {
   html, body, #root {
     overflow: hidden;
@@ -27,9 +27,7 @@ body {
   }
   
   body {
-    -webkit-overflow-scrolling: none;
     overscroll-behavior: none;
-    touch-action: none;
   }
 }
 

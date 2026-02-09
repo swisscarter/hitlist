@@ -1,10 +1,10 @@
 import React from 'react'
-import VideoPlayer from './components/VideoPlayer'
+import VideoFeed from './components/VideoFeed'
 
 function App() {
   return (
     <div className="app-container">
-      <VideoPlayer />
+      <VideoFeed />
     </div>
   )
 }
