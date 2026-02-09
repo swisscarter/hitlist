@@ -6,11 +6,20 @@
 
 html, body, #root {
   width: 100%;
-  min-height: 100vh;
+  height: 100%;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-font-smoothing: antialiased;
   background-color: #000000;
+  -webkit-overflow-scrolling: none;
+  overscroll-behavior: none;
+  touch-action: none;
 }
