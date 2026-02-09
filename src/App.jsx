@@ -2,7 +2,11 @@ import React from 'react'
 import VideoPlayer from './components/VideoPlayer'
 
 function App() {
-  return <VideoPlayer />
+  return (
+    <div className="app-container">
+      <VideoPlayer />
+    </div>
+  )
 }
 
 export default App
