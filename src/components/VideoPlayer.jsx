@@ -18,7 +18,7 @@ export default function VideoPlayer() {
     const hideControls = () => {
       timeout = setTimeout(() => {
         setShowControls(false)
-      }, 3000)
+      }, 1000)
     }
 
     hideControls()
