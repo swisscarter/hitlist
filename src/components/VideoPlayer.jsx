@@ -13,7 +13,8 @@ export default function VideoPlayer({
   onToggleFullscreen,
   controlsVisible,
   onShowControls,
-  onHideControls
+  onHideControls,
+  onVideoEnded
 }) {
   const [progress, setProgress] = useState(0)
   const videoRef = useRef(null)
@@ -77,9 +78,9 @@ export default function VideoPlayer({
           style={{ objectFit: fit }}
           src={src}
           autoPlay
-          loop
           muted
           playsInline
+          onEnded={onVideoEnded}
         />
       </div>
 

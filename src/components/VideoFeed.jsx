@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import VideoPlayer from './VideoPlayer'
 import './VideoFeed.css'
 
@@ -41,6 +41,7 @@ export default function VideoFeed() {
   // Shared state across all videos
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [controlsVisible, setControlsVisible] = useState(true)
+  const feedRef = useRef(null)
 
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen)
@@ -55,8 +56,18 @@ export default function VideoFeed() {
     setControlsVisible(false)
   }
 
+  const scrollToNext = (currentIndex) => {
+    const nextIndex = currentIndex + 1
+    if (nextIndex < videos.length && feedRef.current) {
+      const items = feedRef.current.querySelectorAll('.video-feed__item')
+      if (items[nextIndex]) {
+        items[nextIndex].scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+  }
+
   return (
-    <div className="video-feed">
+    <div className="video-feed" ref={feedRef}>
       {videos.map((video, index) => (
         <div key={index} className="video-feed__item">
           <VideoPlayer 
@@ -72,6 +83,7 @@ export default function VideoFeed() {
             controlsVisible={controlsVisible}
             onShowControls={showControls}
             onHideControls={hideControls}
+            onVideoEnded={() => scrollToNext(index)}
           />
         </div>
       ))}
