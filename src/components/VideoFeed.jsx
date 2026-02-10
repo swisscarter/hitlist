@@ -4,28 +4,36 @@ import './VideoFeed.css'
 
 const videos = [
   { 
-    src: '/windmill.mp4', 
-    title: 'Windmill', 
-    episode: 'Nature Series',
-    likes: '246k',
-    comments: '1.9k',
-    fit: 'contain'
-  },
-  { 
-    src: '/brazil.mp4', 
-    title: 'Brazil', 
-    episode: 'Travel Diaries',
-    likes: '892k',
-    comments: '12.4k',
-    fit: 'cover'  // Zoom to fill vertical viewport
-  },
-  { 
-    src: '/bison.mp4', 
-    title: 'Bison', 
-    episode: 'Wildlife',
+    src: '/part1.mp4', 
+    title: 'The Undercover Doctor', 
+    episode: 'Part 1',
     likes: '1.2M',
-    comments: '8.7k',
-    fit: 'contain'
+    comments: '24.8k',
+    fit: 'cover'
+  },
+  { 
+    src: '/part2.mp4', 
+    title: 'The Undercover Doctor', 
+    episode: 'Part 2',
+    likes: '986k',
+    comments: '18.3k',
+    fit: 'cover'
+  },
+  { 
+    src: '/part3.mp4', 
+    title: 'The Undercover Doctor', 
+    episode: 'Part 3',
+    likes: '847k',
+    comments: '15.1k',
+    fit: 'cover'
+  },
+  { 
+    src: '/part4.mp4', 
+    title: 'The Undercover Doctor', 
+    episode: 'Part 4',
+    likes: '723k',
+    comments: '12.6k',
+    fit: 'cover'
   }
 ]
 
