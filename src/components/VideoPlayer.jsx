@@ -199,7 +199,9 @@ export default function VideoPlayer({
         onMouseDown={handleDragStart}
         onTouchStart={handleDragStart}
       >
-        <div className="video-player__progress-fill" style={{ width: `${progress}%` }} />
+        <div className="video-player__progress-track">
+          <div className="video-player__progress-fill" style={{ width: `${progress}%` }} />
+        </div>
       </div>
     </div>
   )
