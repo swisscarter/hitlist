@@ -20,14 +20,13 @@
   position: absolute;
   top: 0;
   left: 0;
-  visibility: hidden;
+  display: none;
   pointer-events: none;
 }
 
 .video-feed__item--active {
-  visibility: visible;
+  display: block;
   pointer-events: auto;
-  z-index: 1;
 }
 
 /* Desktop */
