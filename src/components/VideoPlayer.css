@@ -130,6 +130,16 @@
     0 1px 1.75px rgba(26, 26, 26, 0.12);
 }
 
+.video-player__fs-icon--clickable {
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.video-player__fs-icon--clickable:active {
+  transform: scale(0.9);
+  opacity: 0.7;
+}
+
 .video-player__episodes-badge {
   display: flex;
   align-items: center;

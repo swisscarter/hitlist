@@ -11,7 +11,9 @@ export default function VideoPlayer({
   onShowControls,
   onHideControls,
   onVideoEnded,
-  isActive
+  isActive,
+  isMuted = true,
+  onToggleMute
 }) {
   const [progress, setProgress] = useState(0)
   const [isPlaying, setIsPlaying] = useState(true)
@@ -167,7 +169,7 @@ export default function VideoPlayer({
           className="video-player__video"
           style={{ objectFit: fit }}
           src={src}
-          muted
+          muted={isMuted}
           playsInline
           onEnded={onVideoEnded}
         />
@@ -177,6 +179,8 @@ export default function VideoPlayer({
       <MinimalBottom 
         visible={controlsVisible}
         episodeNum={episodeNum}
+        isMuted={isMuted}
+        onToggleMute={onToggleMute}
       />
 
       {/* Progress Bar - draggable */}
@@ -196,15 +200,30 @@ export default function VideoPlayer({
 }
 
 /* Minimal Bottom - volume, episodes, CC (auto-hides) */
-function MinimalBottom({ visible, episodeNum }) {
+function MinimalBottom({ visible, episodeNum, isMuted, onToggleMute }) {
+  const handleSoundClick = (e) => {
+    e.stopPropagation()
+    onToggleMute()
+  }
+
   return (
     <div className={`video-player__bottom video-player__bottom--minimal ${visible ? '' : 'video-player__bottom--hidden'}`}>
       {/* Left - Volume */}
       <div className="video-player__fs-left">
-        <div className="video-player__fs-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M5.69722 8H3C2.44772 8 2 8.44772 2 9V15C2 15.5523 2.44772 16 3 16H5.69722C5.89464 16 6.08765 16.0584 6.25192 16.168L12 20V4L6.25192 7.83205C6.08765 7.94156 5.89464 8 5.69722 8Z" stroke="rgba(255,255,255,0.5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+        <div className="video-player__fs-icon video-player__fs-icon--clickable" onClick={handleSoundClick}>
+          {isMuted ? (
+            /* Sound Off Icon */
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M5.69722 8H3C2.44772 8 2 8.44772 2 9V15C2 15.5523 2.44772 16 3 16H5.69722C5.89464 16 6.08765 16.0584 6.25192 16.168L12 20V4L6.25192 7.83205C6.08765 7.94156 5.89464 8 5.69722 8Z" stroke="rgba(255,255,255,0.5)" strokeWidth="2" strokeLinecap="round"/>
+              <path d="M21.5 10L17.5 14M17.5 10L21.5 14" stroke="rgba(255,255,255,0.5)" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+          ) : (
+            /* Sound On Icon */
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M5.69722 8H3C2.44772 8 2 8.44772 2 9V15C2 15.5523 2.44772 16 3 16H5.69722C5.89464 16 6.08765 16.0584 6.25192 16.168L12 20V4L6.25192 7.83205C6.08765 7.94156 5.89464 8 5.69722 8Z" stroke="rgba(255,255,255,0.5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M19.07 4.93C20.94 6.8 22 9.33 22 12C22 14.67 20.94 17.2 19.07 19.07M15.54 8.46C16.48 9.4 17 10.67 17 12C17 13.33 16.48 14.6 15.54 15.54" stroke="rgba(255,255,255,0.5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          )}
         </div>
       </div>
 

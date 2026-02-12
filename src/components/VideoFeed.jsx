@@ -56,6 +56,7 @@ const videos = [
 export default function VideoFeed() {
   const [controlsVisible, setControlsVisible] = useState(true)
   const [activeIndex, setActiveIndex] = useState(0)
+  const [isMuted, setIsMuted] = useState(true) // Start with sound off
   const feedRef = useRef(null)
   const touchStartRef = useRef({ x: 0, y: 0 })
   const touchEndRef = useRef({ x: 0, y: 0 })
@@ -66,6 +67,10 @@ export default function VideoFeed() {
 
   const hideControls = () => {
     setControlsVisible(false)
+  }
+
+  const toggleMute = () => {
+    setIsMuted(prev => !prev)
   }
 
   const goToNext = useCallback(() => {
@@ -164,6 +169,8 @@ export default function VideoFeed() {
             onHideControls={hideControls}
             onVideoEnded={goToNext}
             isActive={activeIndex === index}
+            isMuted={isMuted}
+            onToggleMute={toggleMute}
           />
         </div>
       ))}
