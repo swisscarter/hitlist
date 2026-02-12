@@ -7,48 +7,33 @@ const videos = [
     src: '/part1.mp4', 
     title: 'The Undercover Doctor', 
     episode: 'Part 1',
-    likes: '1.2M',
-    comments: '24.8k',
     fit: 'cover'
   },
   { 
     src: '/part2.mp4', 
     title: 'The Undercover Doctor', 
     episode: 'Part 2',
-    likes: '986k',
-    comments: '18.3k',
     fit: 'cover'
   },
   { 
     src: '/part3.mp4', 
     title: 'The Undercover Doctor', 
     episode: 'Part 3',
-    likes: '847k',
-    comments: '15.1k',
     fit: 'cover'
   },
   { 
     src: '/part4.mp4', 
     title: 'The Undercover Doctor', 
     episode: 'Part 4',
-    likes: '723k',
-    comments: '12.6k',
     fit: 'cover'
   }
 ]
 
 export default function VideoFeed() {
-  // Shared state across all videos
-  const [isExpanded, setIsExpanded] = useState(false)
   const [controlsVisible, setControlsVisible] = useState(true)
   const [activeIndex, setActiveIndex] = useState(0)
   const feedRef = useRef(null)
   const itemRefs = useRef([])
-
-  const toggleExpanded = () => {
-    setIsExpanded(!isExpanded)
-    setControlsVisible(true) // Show controls when toggling
-  }
 
   const showControls = () => {
     setControlsVisible(true)
@@ -106,12 +91,8 @@ export default function VideoFeed() {
             src={video.src}
             title={video.title}
             episode={video.episode}
-            likes={video.likes}
-            comments={video.comments}
             episodeNum={index + 1}
             fit={video.fit}
-            isExpanded={isExpanded}
-            onToggleExpanded={toggleExpanded}
             controlsVisible={controlsVisible}
             onShowControls={showControls}
             onHideControls={hideControls}
