@@ -58,6 +58,11 @@ export default function VideoFeed() {
 
   // Handle swipe gestures
   const handleTouchStart = (e) => {
+    // Don't track swipes on progress bar
+    if (e.target.closest('.video-player__progress-bar')) {
+      touchStartRef.current = null
+      return
+    }
     touchStartRef.current = {
       x: e.touches[0].clientX,
       y: e.touches[0].clientY
@@ -65,6 +70,9 @@ export default function VideoFeed() {
   }
 
   const handleTouchEnd = (e) => {
+    // Skip if touch started on progress bar
+    if (!touchStartRef.current) return
+
     touchEndRef.current = {
       x: e.changedTouches[0].clientX,
       y: e.changedTouches[0].clientY
@@ -88,6 +96,12 @@ export default function VideoFeed() {
 
   // Handle tap on left/right edges for navigation
   const handleTapNavigation = (e) => {
+    // Don't navigate if interacting with progress bar or bottom controls
+    if (e.target.closest('.video-player__progress-bar') || 
+        e.target.closest('.video-player__bottom')) {
+      return
+    }
+
     const rect = feedRef.current?.getBoundingClientRect()
     if (!rect) return
 
