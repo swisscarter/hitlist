@@ -4,27 +4,51 @@ import './VideoFeed.css'
 
 const videos = [
   { 
-    src: '/part1.mp4', 
-    title: 'The Undercover Doctor', 
-    episode: 'Part 1',
+    src: '/When he can\'t connect.mp4', 
+    title: 'The Ick', 
+    episode: 'When he can\'t connect',
     fit: 'cover'
   },
   { 
-    src: '/part2.mp4', 
-    title: 'The Undercover Doctor', 
-    episode: 'Part 2',
+    src: '/When he has an art.mp4', 
+    title: 'The Ick', 
+    episode: 'When he has an art',
     fit: 'cover'
   },
   { 
-    src: '/part3.mp4', 
-    title: 'The Undercover Doctor', 
-    episode: 'Part 3',
+    src: '/When he loves to ski.mp4', 
+    title: 'The Ick', 
+    episode: 'When he loves to ski',
     fit: 'cover'
   },
   { 
-    src: '/part4.mp4', 
-    title: 'The Undercover Doctor', 
-    episode: 'Part 4',
+    src: '/When he makes a sound.mp4', 
+    title: 'The Ick', 
+    episode: 'When he makes a sound',
+    fit: 'cover'
+  },
+  { 
+    src: '/When he runs it back.mp4', 
+    title: 'The Ick', 
+    episode: 'When he runs it back',
+    fit: 'cover'
+  },
+  { 
+    src: '/When he seeks professional help.mp4', 
+    title: 'The Ick', 
+    episode: 'When he seeks professional help',
+    fit: 'cover'
+  },
+  { 
+    src: '/When he\'s packing.mp4', 
+    title: 'The Ick', 
+    episode: 'When he\'s packing',
+    fit: 'cover'
+  },
+  { 
+    src: '/When he\'s the main character.mp4', 
+    title: 'The Ick', 
+    episode: 'When he\'s the main character',
     fit: 'cover'
   }
 ]
