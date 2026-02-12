@@ -10,7 +10,7 @@
 /* ==================== TOP SECTION ==================== */
 .video-player__top {
   position: absolute;
-  top: 79px;
+  top: 20px;
   left: 0;
   right: 0;
   display: flex;
