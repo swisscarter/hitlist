@@ -10,7 +10,7 @@
     rgba(0, 0, 0, 0) 0%,
     rgba(0, 0, 0, 0.5) 20%,
     rgba(0, 0, 0, 0.9) 40%,
-    rgba(0, 0, 0, 1) 55%,
+    rgba(0, 0, 0, 1) 50%,
     rgba(0, 0, 0, 1) 100%
   );
   z-index: 100;
@@ -97,6 +97,10 @@
   text-align: center;
   cursor: pointer;
   transition: transform 0.15s ease, opacity 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .signin-overlay__btn:active {
