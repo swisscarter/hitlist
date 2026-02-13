@@ -1,22 +1,32 @@
-/* Video Feed - TikTok style vertical scroll */
+/* Video Feed - Instagram Stories style horizontal scroll */
 .video-feed {
   width: 100vw;
   height: 100vh;
   height: 100dvh;
-  overflow-y: scroll;
+  display: flex;
+  flex-direction: row;
   overflow-x: hidden;
-  scroll-snap-type: y mandatory;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
+  position: relative;
 }
 
 .video-feed__item {
   width: 100vw;
   height: 100vh;
   height: 100dvh;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
   flex-shrink: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  pointer-events: none;
+}
+
+.video-feed__item--active {
+  display: block;
+  pointer-events: auto;
 }
 
 /* Desktop */

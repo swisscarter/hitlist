@@ -1,0 +1,250 @@
+/* Apple Pay Overlay */
+.applepay-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.65);
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 8px;
+  padding-bottom: env(safe-area-inset-bottom, 8px);
+  animation: applePayFadeIn 150ms ease-out forwards;
+}
+
+@keyframes applePayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Sheet */
+.applepay-sheet {
+  background-color: rgba(243, 243, 243, 0.95);
+  border-radius: 48px;
+  border: 1px solid #ffffff;
+  padding: 12px 0 24px 0;
+  animation: applePaySlideUp 150ms ease-out forwards;
+}
+
+@keyframes applePaySlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header */
+.applepay-sheet__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px 16px 16px;
+}
+
+.applepay-sheet__logo {
+  height: 26px;
+  width: auto;
+}
+
+.applepay-sheet__close {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #dadbdc;
+  border: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.applepay-sheet__close:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.applepay-sheet__close:not(:disabled):active {
+  opacity: 0.7;
+}
+
+/* Options */
+.applepay-sheet__options {
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.applepay-sheet__card {
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.applepay-sheet__card--selected {
+  padding: 16px;
+}
+
+.applepay-sheet__card-icon {
+  width: 37px;
+  height: 24px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-right: 16px;
+}
+
+.applepay-sheet__card-gradient {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #e7bb64 0%, #efc7da 30%, #c49cef 60%, #9faf6d 100%);
+}
+
+.applepay-sheet__card-name {
+  font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  color: #000000;
+  flex: 1;
+}
+
+.applepay-sheet__card-number {
+  font-family: 'SF Pro Rounded', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  color: #656565;
+  letter-spacing: -1.2px;
+  margin-right: 16px;
+}
+
+.applepay-sheet__card-address {
+  font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  color: #000000;
+  flex: 1;
+}
+
+.applepay-sheet__card-chevron {
+  position: absolute;
+  right: 16px;
+}
+
+/* Bottom */
+.applepay-sheet__bottom {
+  padding: 24px 24px 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Price */
+.applepay-sheet__price {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.applepay-sheet__price-label {
+  font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #868686;
+  letter-spacing: -0.32px;
+}
+
+.applepay-sheet__price-amount {
+  display: flex;
+  align-items: baseline;
+}
+
+.applepay-sheet__price-currency {
+  font-family: 'SF Pro Rounded', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 32px;
+  font-weight: 500;
+  color: #000000;
+  order: 2;
+  margin-left: 4px;
+}
+
+.applepay-sheet__price-value {
+  font-family: 'SF Pro Rounded', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 32px;
+  font-weight: 500;
+  color: #000000;
+  order: 1;
+}
+
+/* State Indicator */
+.applepay-sheet__state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  padding: 8px;
+  transition: opacity 0.15s ease;
+}
+
+.applepay-sheet__state:active {
+  opacity: 0.7;
+}
+
+.applepay-sheet__state-icon {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.applepay-sheet__state-label {
+  font-family: 'SF Pro Rounded', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #000000;
+  text-align: center;
+}
+
+/* Spinner */
+.applepay-sheet__spinner {
+  width: 38px;
+  height: 38px;
+  border: 2px solid transparent;
+  border-top-color: #3B82F7;
+  border-right-color: #3B82F7;
+  border-bottom-color: #3B82F7;
+  border-radius: 50%;
+  animation: applePaySpin 1s linear infinite;
+}
+
+@keyframes applePaySpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Done */
+.applepay-sheet__done {
+  animation: applePayDoneScale 0.3s ease-out forwards;
+}
+
+@keyframes applePayDoneScale {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

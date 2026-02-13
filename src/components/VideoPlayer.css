@@ -7,6 +7,44 @@
   overflow: hidden;
 }
 
+/* ==================== TOP SECTION ==================== */
+.video-player__top {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  z-index: 5;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  opacity: 1;
+  visibility: visible;
+}
+
+.video-player__top--hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.video-player__show-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1.33;
+}
+
+.video-player__episode-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1.33;
+}
+
 /* ==================== MEDIA AREA ==================== */
 .video-player__media {
   position: absolute;
@@ -36,131 +74,6 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-}
-
-/* ==================== INFO SECTION ==================== */
-.video-player__info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 24px 16px;
-  padding-bottom: max(24px, env(safe-area-inset-bottom));
-  justify-content: flex-end;
-}
-
-.video-player__top-info {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.video-player__title-row {
-  display: flex;
-  align-items: center;
-}
-
-.video-player__title {
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  color: #ffffff;
-  line-height: 1.43;
-}
-
-.video-player__metadata {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.video-player__episode-name {
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  font-weight: 400;
-  color: #ffffff;
-  line-height: 1.33;
-}
-
-.video-player__dot {
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.video-player__cta-badge {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  background-color: rgba(255, 255, 255, 0.12);
-  border-radius: 6px;
-  padding: 4px 4px 4px 8px;
-}
-
-.video-player__cta-badge span {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  font-weight: 500;
-  color: #ffffff;
-  line-height: 1.2;
-}
-
-.video-player__cta-badge svg {
-  width: 16px;
-  height: 16px;
-}
-
-/* ==================== ACTIONS SECTION ==================== */
-.video-player__actions {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 0 16px 24px 16px;
-  padding-bottom: max(24px, env(safe-area-inset-bottom));
-  align-items: center;
-}
-
-.video-player__action {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.video-player__action-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 100px;
-  background-color: rgba(255, 255, 255, 0.01);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 
-    0 2px 3.5px rgba(26, 26, 26, 0.06),
-    0 1px 1.75px rgba(26, 26, 26, 0.12);
-}
-
-.video-player__action-count {
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  color: #ffffff;
-  line-height: 1.33;
-  text-align: center;
-  padding: 0 12px;
-}
-
-/* ==================== CLICKABLE ICONS ==================== */
-.video-player__action-icon--clickable,
-.video-player__fs-icon--clickable {
-  cursor: pointer;
-  transition: transform 0.15s ease, opacity 0.15s ease;
-}
-
-.video-player__action-icon--clickable:active,
-.video-player__fs-icon--clickable:active {
-  transform: scale(0.9);
-  opacity: 0.7;
 }
 
 /* ==================== MINIMAL BOTTOM (default view) ==================== */
@@ -215,6 +128,16 @@
   box-shadow: 
     0 2px 3.5px rgba(26, 26, 26, 0.06),
     0 1px 1.75px rgba(26, 26, 26, 0.12);
+}
+
+.video-player__fs-icon--clickable {
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.video-player__fs-icon--clickable:active {
+  transform: scale(0.9);
+  opacity: 0.7;
 }
 
 .video-player__episodes-badge {
