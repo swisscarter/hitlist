@@ -1,6 +1,9 @@
 import React, { useState, useRef, useCallback } from 'react'
 import VideoPlayer from './VideoPlayer'
+import SignInOverlay from './SignInOverlay'
 import './VideoFeed.css'
+
+const MAX_FREE_VIDEOS = 3
 
 const videos = [
   { 
@@ -57,6 +60,8 @@ export default function VideoFeed() {
   const [controlsVisible, setControlsVisible] = useState(true)
   const [activeIndex, setActiveIndex] = useState(0)
   const [isMuted, setIsMuted] = useState(true) // Start with sound off
+  const [videosWatched, setVideosWatched] = useState(0)
+  const [showSignIn, setShowSignIn] = useState(false)
   const feedRef = useRef(null)
   const touchStartRef = useRef({ x: 0, y: 0 })
   const touchEndRef = useRef({ x: 0, y: 0 })
@@ -74,19 +79,45 @@ export default function VideoFeed() {
   }
 
   const goToNext = useCallback(() => {
+    // Block if sign in overlay is shown
+    if (showSignIn) return
+    
     if (activeIndex < videos.length - 1) {
       setActiveIndex(prev => prev + 1)
     }
-  }, [activeIndex])
+  }, [activeIndex, showSignIn])
 
   const goToPrev = useCallback(() => {
+    // Block if sign in overlay is shown
+    if (showSignIn) return
+    
     if (activeIndex > 0) {
       setActiveIndex(prev => prev - 1)
     }
-  }, [activeIndex])
+  }, [activeIndex, showSignIn])
+
+  // Handle video completion - track watched count
+  const handleVideoEnded = useCallback(() => {
+    const newWatchCount = videosWatched + 1
+    setVideosWatched(newWatchCount)
+    
+    // Show sign in overlay after 3 videos
+    if (newWatchCount >= MAX_FREE_VIDEOS) {
+      setShowSignIn(true)
+      return
+    }
+    
+    // Otherwise go to next video
+    if (activeIndex < videos.length - 1) {
+      setActiveIndex(prev => prev + 1)
+    }
+  }, [videosWatched, activeIndex])
 
   // Handle swipe gestures
   const handleTouchStart = (e) => {
+    // Block if sign in overlay is shown
+    if (showSignIn) return
+    
     // Don't track swipes on progress bar
     if (e.target.closest('.video-player__progress-bar')) {
       touchStartRef.current = null
@@ -99,6 +130,9 @@ export default function VideoFeed() {
   }
 
   const handleTouchEnd = (e) => {
+    // Block if sign in overlay is shown
+    if (showSignIn) return
+    
     // Skip if touch started on progress bar
     if (!touchStartRef.current) return
 
@@ -125,6 +159,9 @@ export default function VideoFeed() {
 
   // Handle tap on left/right edges for navigation
   const handleTapNavigation = (e) => {
+    // Block if sign in overlay is shown
+    if (showSignIn) return
+    
     // Don't navigate if interacting with progress bar or bottom controls
     if (e.target.closest('.video-player__progress-bar') || 
         e.target.closest('.video-player__bottom')) {
@@ -167,13 +204,16 @@ export default function VideoFeed() {
             controlsVisible={controlsVisible}
             onShowControls={showControls}
             onHideControls={hideControls}
-            onVideoEnded={goToNext}
-            isActive={activeIndex === index}
+            onVideoEnded={handleVideoEnded}
+            isActive={activeIndex === index && !showSignIn}
             isMuted={isMuted}
             onToggleMute={toggleMute}
           />
         </div>
       ))}
+      
+      {/* Sign In Overlay - shown after MAX_FREE_VIDEOS watched */}
+      <SignInOverlay visible={showSignIn} />
     </div>
   )
 }
