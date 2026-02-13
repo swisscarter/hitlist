@@ -10,6 +10,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  padding-bottom: env(safe-area-inset-bottom, 0);
   animation: appleSigninFadeIn 150ms ease-out forwards;
 }
 
@@ -117,7 +118,6 @@
   display: flex;
   justify-content: center;
   padding: 32px 0 40px 0;
-  padding-bottom: max(40px, calc(env(safe-area-inset-bottom) + 24px));
 }
 
 .apple-signin__continue {
