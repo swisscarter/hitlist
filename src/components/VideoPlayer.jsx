@@ -13,7 +13,8 @@ export default function VideoPlayer({
   onVideoEnded,
   isActive,
   isMuted = true,
-  onToggleMute
+  onToggleMute,
+  isSignedIn = false
 }) {
   const [progress, setProgress] = useState(0)
   const [isPlaying, setIsPlaying] = useState(true)
@@ -181,6 +182,7 @@ export default function VideoPlayer({
         episodeNum={episodeNum}
         isMuted={isMuted}
         onToggleMute={onToggleMute}
+        isSignedIn={isSignedIn}
       />
 
       {/* Progress Bar - draggable */}
@@ -200,7 +202,7 @@ export default function VideoPlayer({
 }
 
 /* Minimal Bottom - volume, episodes, CC (auto-hides) */
-function MinimalBottom({ visible, episodeNum, isMuted, onToggleMute }) {
+function MinimalBottom({ visible, episodeNum, isMuted, onToggleMute, isSignedIn }) {
   const handleSoundClick = (e) => {
     e.stopPropagation()
     onToggleMute()
@@ -227,14 +229,16 @@ function MinimalBottom({ visible, episodeNum, isMuted, onToggleMute }) {
         </div>
       </div>
 
-      {/* Center - Episodes Badge */}
+      {/* Center - Episodes Badge (only shown when signed in) */}
       <div className="video-player__fs-center">
-        <div className="video-player__episodes-badge">
-          <span>EP {episodeNum}</span>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M6 4L10 8L6 12" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </div>
+        {isSignedIn && (
+          <div className="video-player__episodes-badge">
+            <span>EP {episodeNum}</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M6 4L10 8L6 12" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        )}
       </div>
 
       {/* Right - CC */}

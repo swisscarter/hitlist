@@ -246,6 +246,7 @@ export default function VideoFeed() {
             isActive={activeIndex === index && !showSignIn && !showPaywall}
             isMuted={isMuted}
             onToggleMute={toggleMute}
+            isSignedIn={isSignedIn}
           />
         </div>
       ))}
