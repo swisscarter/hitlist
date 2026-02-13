@@ -84,22 +84,24 @@ export default function VideoFeed() {
   }
 
   const goToNext = useCallback(() => {
-    // Block if any overlay is shown
-    if (showSignIn || showPaywall) return
+    // DEMO MODE: Allow skipping even when overlay is shown
+    // TODO: Revert to block navigation when overlays are shown for production
+    // if (showSignIn || showPaywall) return
     
     if (activeIndex < videos.length - 1) {
       setActiveIndex(prev => prev + 1)
     }
-  }, [activeIndex, showSignIn, showPaywall])
+  }, [activeIndex])
 
   const goToPrev = useCallback(() => {
-    // Block if any overlay is shown
-    if (showSignIn || showPaywall) return
+    // DEMO MODE: Allow skipping even when overlay is shown
+    // TODO: Revert to block navigation when overlays are shown for production
+    // if (showSignIn || showPaywall) return
     
     if (activeIndex > 0) {
       setActiveIndex(prev => prev - 1)
     }
-  }, [activeIndex, showSignIn, showPaywall])
+  }, [activeIndex])
 
   // Handle video completion - track watched count
   const handleVideoEnded = useCallback(() => {
@@ -153,8 +155,9 @@ export default function VideoFeed() {
 
   // Handle swipe gestures
   const handleTouchStart = (e) => {
-    // Block if any overlay is shown
-    if (showSignIn || showPaywall) return
+    // DEMO MODE: Allow skipping even when overlay is shown
+    // TODO: Revert to block navigation when overlays are shown for production
+    // if (showSignIn || showPaywall) return
     
     // Don't track swipes on progress bar
     if (e.target.closest('.video-player__progress-bar')) {
@@ -168,8 +171,9 @@ export default function VideoFeed() {
   }
 
   const handleTouchEnd = (e) => {
-    // Block if any overlay is shown
-    if (showSignIn || showPaywall) return
+    // DEMO MODE: Allow skipping even when overlay is shown
+    // TODO: Revert to block navigation when overlays are shown for production
+    // if (showSignIn || showPaywall) return
     
     // Skip if touch started on progress bar
     if (!touchStartRef.current) return
@@ -197,8 +201,9 @@ export default function VideoFeed() {
 
   // Handle tap on left/right edges for navigation
   const handleTapNavigation = (e) => {
-    // Block if any overlay is shown
-    if (showSignIn || showPaywall) return
+    // DEMO MODE: Allow skipping even when overlay is shown
+    // TODO: Revert to block navigation when overlays are shown for production
+    // if (showSignIn || showPaywall) return
     
     // Don't navigate if interacting with progress bar or bottom controls
     if (e.target.closest('.video-player__progress-bar') || 
