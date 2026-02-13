@@ -1,0 +1,139 @@
+/* Apple Sign In Sheet Overlay */
+.apple-signin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  animation: appleSigninFadeIn 150ms ease-out forwards;
+}
+
+@keyframes appleSigninFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Bottom Sheet */
+.apple-signin__sheet {
+  background-color: #232323;
+  border-radius: 12px 12px 0 0;
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  animation: appleSheetSlideUp 150ms ease-out forwards;
+}
+
+@keyframes appleSheetSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header */
+.apple-signin__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 16px 12px 16px;
+}
+
+.apple-signin__title {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.apple-signin__close {
+  width: 32px;
+  height: 32px;
+  border-radius: 100px;
+  background-color: rgba(229, 229, 235, 0.12);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.apple-signin__close:active {
+  opacity: 0.7;
+}
+
+/* Content */
+.apple-signin__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px 0 24px;
+}
+
+/* App Icon */
+.apple-signin__icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.apple-signin__icon-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Description */
+.apple-signin__description {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  text-align: center;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Action */
+.apple-signin__action {
+  display: flex;
+  justify-content: center;
+  padding: 32px 0 40px 0;
+  padding-bottom: max(40px, calc(env(safe-area-inset-bottom) + 24px));
+}
+
+.apple-signin__continue {
+  padding: 12px 25px;
+  border-radius: 9px;
+  background-color: #007AFF;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.apple-signin__continue:active {
+  opacity: 0.85;
+  transform: scale(0.97);
+}

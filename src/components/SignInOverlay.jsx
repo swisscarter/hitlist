@@ -1,8 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
+import AppleSignInSheet from './AppleSignInSheet'
 import './SignInOverlay.css'
 
 export default function SignInOverlay({ visible }) {
+  const [showAppleSignIn, setShowAppleSignIn] = useState(false)
+
   if (!visible) return null
+
+  const handleAppleClick = () => {
+    setShowAppleSignIn(true)
+  }
+
+  const handleAppleClose = () => {
+    setShowAppleSignIn(false)
+  }
 
   return (
     <div className="signin-overlay">
@@ -21,7 +32,7 @@ export default function SignInOverlay({ visible }) {
 
           {/* Actions */}
           <div className="signin-overlay__actions">
-            <button className="signin-overlay__btn signin-overlay__btn--primary">
+            <button className="signin-overlay__btn signin-overlay__btn--primary" onClick={handleAppleClick}>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M13.0133 5.58667C12.9067 5.66 11.4533 6.48 11.4533 8.30667C11.4533 10.4267 13.3067 11.1733 13.36 11.1867C13.3533 11.2533 13.0533 12.2533 12.3467 13.28C11.72 14.1867 11.0667 15.0933 10.08 15.0933C9.09333 15.0933 8.82667 14.5067 7.68 14.5067C6.56 14.5067 6.16 15.1067 5.25333 15.1067C4.34667 15.1067 3.72 14.2533 2.98667 13.2267C2.13333 12.0133 1.44 10.1333 1.44 8.34667C1.44 5.34667 3.44 3.76 5.41333 3.76C6.37333 3.76 7.18667 4.4 7.8 4.4C8.38667 4.4 9.29333 3.72 10.4 3.72C10.8267 3.72 12.28 3.76 13.0133 5.58667ZM10.0533 2.45333C10.5333 1.88 10.8667 1.09333 10.8667 0.306667C10.8667 0.2 10.86 0.0933333 10.8467 0C10.06 0.0266667 9.12 0.52 8.56 1.17333C8.12 1.68 7.70667 2.46667 7.70667 3.26667C7.70667 3.38667 7.72667 3.50667 7.73333 3.54667C7.78667 3.55333 7.87333 3.56667 7.96 3.56667C8.66667 3.56667 9.54667 3.09333 10.0533 2.45333Z" fill="black"/>
               </svg>
@@ -39,6 +50,9 @@ export default function SignInOverlay({ visible }) {
           </div>
         </div>
       </div>
+
+      {/* Apple Sign In Sheet */}
+      <AppleSignInSheet visible={showAppleSignIn} onClose={handleAppleClose} />
     </div>
   )
 }

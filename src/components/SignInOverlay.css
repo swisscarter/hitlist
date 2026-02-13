@@ -17,6 +17,16 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  animation: signinOverlayFadeIn 150ms ease-out forwards;
+}
+
+@keyframes signinOverlayFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Sheet Container */
@@ -35,6 +45,18 @@
   gap: 24px;
   padding: 32px;
   padding-bottom: max(32px, calc(env(safe-area-inset-bottom) + 16px));
+  animation: signinContentSlideUp 150ms ease-out forwards;
+}
+
+@keyframes signinContentSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Brand */
