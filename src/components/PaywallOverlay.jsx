@@ -1,10 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
+import ApplePaySheet from './ApplePaySheet'
 import './PaywallOverlay.css'
 
 export default function PaywallOverlay({ visible, onUnlock }) {
+  const [showApplePay, setShowApplePay] = useState(false)
+
   if (!visible) return null
 
-  const handleUnlock = () => {
+  const handleUnlockClick = () => {
+    setShowApplePay(true)
+  }
+
+  const handleApplePayClose = () => {
+    setShowApplePay(false)
+  }
+
+  const handleApplePayComplete = () => {
+    setShowApplePay(false)
     onUnlock?.()
   }
 
@@ -28,7 +40,7 @@ export default function PaywallOverlay({ visible, onUnlock }) {
 
           {/* Actions */}
           <div className="paywall-overlay__actions">
-            <button className="paywall-overlay__btn paywall-overlay__btn--primary" onClick={handleUnlock}>
+            <button className="paywall-overlay__btn paywall-overlay__btn--primary" onClick={handleUnlockClick}>
               Unlock chapter 2 for $2.99
             </button>
 
@@ -51,6 +63,13 @@ export default function PaywallOverlay({ visible, onUnlock }) {
           </div>
         </div>
       </div>
+
+      {/* Apple Pay Sheet */}
+      <ApplePaySheet 
+        visible={showApplePay} 
+        onClose={handleApplePayClose}
+        onComplete={handleApplePayComplete}
+      />
     </div>
   )
 }
