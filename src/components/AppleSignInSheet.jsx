@@ -1,13 +1,17 @@
 import React from 'react'
 import './AppleSignInSheet.css'
 
-export default function AppleSignInSheet({ visible, onClose }) {
+export default function AppleSignInSheet({ visible, onClose, onContinue }) {
   if (!visible) return null
 
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose()
     }
+  }
+
+  const handleContinue = () => {
+    onContinue?.()
   }
 
   return (
@@ -42,7 +46,7 @@ export default function AppleSignInSheet({ visible, onClose }) {
 
         {/* Continue Button */}
         <div className="apple-signin__action">
-          <button className="apple-signin__continue">
+          <button className="apple-signin__continue" onClick={handleContinue}>
             Continue
           </button>
         </div>

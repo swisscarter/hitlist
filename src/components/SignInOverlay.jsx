@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import AppleSignInSheet from './AppleSignInSheet'
 import './SignInOverlay.css'
 
-export default function SignInOverlay({ visible }) {
+export default function SignInOverlay({ visible, onSignInComplete }) {
   const [showAppleSignIn, setShowAppleSignIn] = useState(false)
 
   if (!visible) return null
@@ -13,6 +13,11 @@ export default function SignInOverlay({ visible }) {
 
   const handleAppleClose = () => {
     setShowAppleSignIn(false)
+  }
+
+  const handleAppleContinue = () => {
+    setShowAppleSignIn(false)
+    onSignInComplete?.()
   }
 
   return (
@@ -52,7 +57,11 @@ export default function SignInOverlay({ visible }) {
       </div>
 
       {/* Apple Sign In Sheet */}
-      <AppleSignInSheet visible={showAppleSignIn} onClose={handleAppleClose} />
+      <AppleSignInSheet 
+        visible={showAppleSignIn} 
+        onClose={handleAppleClose} 
+        onContinue={handleAppleContinue}
+      />
     </div>
   )
 }

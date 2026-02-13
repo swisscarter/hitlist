@@ -113,6 +113,15 @@ export default function VideoFeed() {
     }
   }, [videosWatched, activeIndex])
 
+  // Handle successful sign-in - dismiss overlays and continue
+  const handleSignInComplete = useCallback(() => {
+    setShowSignIn(false)
+    // Go to next video if available
+    if (activeIndex < videos.length - 1) {
+      setActiveIndex(prev => prev + 1)
+    }
+  }, [activeIndex])
+
   // Handle swipe gestures
   const handleTouchStart = (e) => {
     // Block if sign in overlay is shown
@@ -213,7 +222,7 @@ export default function VideoFeed() {
       ))}
       
       {/* Sign In Overlay - shown after MAX_FREE_VIDEOS watched */}
-      <SignInOverlay visible={showSignIn} />
+      <SignInOverlay visible={showSignIn} onSignInComplete={handleSignInComplete} />
     </div>
   )
 }
