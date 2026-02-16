@@ -1,0 +1,129 @@
+/* Follow Overlay */
+.follow-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 100;
+  animation: followOverlayFadeIn 150ms ease-out forwards;
+}
+
+@keyframes followOverlayFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.follow-overlay__sheet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
+}
+
+.follow-overlay__content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 32px;
+  padding-bottom: max(32px, env(safe-area-inset-bottom));
+  animation: followContentSlideUp 150ms ease-out forwards;
+}
+
+@keyframes followContentSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Thumbnail */
+.follow-overlay__thumbnail {
+  width: 109px;
+  height: 118px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.follow-overlay__thumbnail-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: #3a3a3a;
+}
+
+/* Message */
+.follow-overlay__message {
+  text-align: center;
+}
+
+.follow-overlay__message p {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Actions */
+.follow-overlay__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 265px;
+}
+
+.follow-overlay__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.43;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.follow-overlay__cta:active {
+  transform: scale(0.97);
+  opacity: 0.9;
+}
+
+.follow-overlay__cta--primary {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.follow-overlay__cta--secondary {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
