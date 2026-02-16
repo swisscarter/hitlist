@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
+import { motion } from 'motion/react'
 import './VideoPlayer.css'
 
 export default function VideoPlayer({ 
@@ -181,8 +182,22 @@ export default function VideoPlayer({
     >
       {/* Top Section - Show title and episode */}
       <div className={`video-player__top ${(showTitle || controlsVisible) ? '' : 'video-player__top--hidden'}`}>
-        <span className="video-player__show-title">{title}</span>
-        <span className="video-player__episode-title">{episode}</span>
+        <motion.span 
+          className="video-player__show-title"
+          initial={{ opacity: 0, y: '45%' }}
+          animate={(showTitle || controlsVisible) ? { opacity: 1, y: 0 } : { opacity: 0, y: '45%' }}
+          transition={{ duration: 0.2, ease: 'easeOut', delay: (showTitle || controlsVisible) ? 1.5 : 0 }}
+        >
+          {title}
+        </motion.span>
+        <motion.span 
+          className="video-player__episode-title"
+          initial={{ opacity: 0, y: '45%' }}
+          animate={(showTitle || controlsVisible) ? { opacity: 0.75, y: 0 } : { opacity: 0, y: '45%' }}
+          transition={{ duration: 0.2, ease: 'easeOut', delay: (showTitle || controlsVisible) ? 1.6 : 0 }}
+        >
+          {episode}
+        </motion.span>
       </div>
 
       {/* Media Area with video */}
