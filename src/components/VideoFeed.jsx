@@ -4,8 +4,9 @@ import SignInOverlay from './SignInOverlay'
 import PaywallOverlay from './PaywallOverlay'
 import './VideoFeed.css'
 
-const MAX_FREE_VIDEOS = 3
-const VIDEOS_BEFORE_PAYWALL = 3
+// Episode indices (0-based) where overlays trigger
+const SIGN_IN_AFTER_EPISODE = 2  // After EP 3 (index 2)
+const PAYWALL_AFTER_EPISODE = 5  // After EP 6 (index 5)
 
 const videos = [
   { 
@@ -62,11 +63,10 @@ export default function VideoFeed() {
   const [controlsVisible, setControlsVisible] = useState(true)
   const [activeIndex, setActiveIndex] = useState(0)
   const [isMuted, setIsMuted] = useState(true) // Start with sound off
-  const [videosWatched, setVideosWatched] = useState(0)
   const [showSignIn, setShowSignIn] = useState(false)
   const [isSignedIn, setIsSignedIn] = useState(false)
-  const [videosAfterSignIn, setVideosAfterSignIn] = useState(0)
   const [showPaywall, setShowPaywall] = useState(false)
+  const [hasPaid, setHasPaid] = useState(false)
   const feedRef = useRef(null)
   const touchStartRef = useRef({ x: 0, y: 0 })
   const touchEndRef = useRef({ x: 0, y: 0 })
@@ -101,35 +101,25 @@ export default function VideoFeed() {
     }
   }, [activeIndex, showSignIn, showPaywall])
 
-  // Handle video completion - track watched count
+  // Handle video completion - check for chapter breaks
   const handleVideoEnded = useCallback(() => {
-    // If signed in, track videos after sign-in for paywall
-    if (isSignedIn) {
-      const newCount = videosAfterSignIn + 1
-      setVideosAfterSignIn(newCount)
-      
-      // Show paywall after 3 more videos
-      if (newCount >= VIDEOS_BEFORE_PAYWALL) {
-        setShowPaywall(true)
-        return
-      }
-    } else {
-      // Not signed in yet - track for sign-in prompt
-      const newWatchCount = videosWatched + 1
-      setVideosWatched(newWatchCount)
-      
-      // Show sign in overlay after 3 videos
-      if (newWatchCount >= MAX_FREE_VIDEOS) {
-        setShowSignIn(true)
-        return
-      }
+    // Check if sign-in required after EP 3 (index 2)
+    if (!isSignedIn && activeIndex === SIGN_IN_AFTER_EPISODE) {
+      setShowSignIn(true)
+      return
+    }
+    
+    // Check if paywall required after EP 6 (index 5)
+    if (isSignedIn && !hasPaid && activeIndex === PAYWALL_AFTER_EPISODE) {
+      setShowPaywall(true)
+      return
     }
     
     // Otherwise go to next video
     if (activeIndex < videos.length - 1) {
       setActiveIndex(prev => prev + 1)
     }
-  }, [videosWatched, activeIndex, isSignedIn, videosAfterSignIn])
+  }, [activeIndex, isSignedIn, hasPaid])
 
   // Handle successful sign-in - dismiss overlays and continue
   const handleSignInComplete = useCallback(() => {
@@ -144,7 +134,7 @@ export default function VideoFeed() {
   // Handle paywall unlock - dismiss overlay and continue
   const handlePaywallUnlock = useCallback(() => {
     setShowPaywall(false)
-    setVideosAfterSignIn(0) // Reset counter for next chapter
+    setHasPaid(true)
     // Go to next video if available
     if (activeIndex < videos.length - 1) {
       setActiveIndex(prev => prev + 1)
