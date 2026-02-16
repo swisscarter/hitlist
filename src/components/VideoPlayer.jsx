@@ -19,8 +19,10 @@ export default function VideoPlayer({
   const [progress, setProgress] = useState(0)
   const [isPlaying, setIsPlaying] = useState(true)
   const [isSeeking, setIsSeeking] = useState(false)
+  const [showTitle, setShowTitle] = useState(false)
   const videoRef = useRef(null)
   const hideTimeoutRef = useRef(null)
+  const titleTimeoutRef = useRef(null)
   const progressBarRef = useRef(null)
 
   // Handle active state - play/pause and restart based on visibility
@@ -31,9 +33,29 @@ export default function VideoPlayer({
     if (isActive) {
       video.currentTime = 0 // Restart from beginning
       video.play().then(() => setIsPlaying(true)).catch(() => {})
+      
+      // Show title at the start of episode for 6 seconds
+      setShowTitle(true)
+      if (titleTimeoutRef.current) {
+        clearTimeout(titleTimeoutRef.current)
+      }
+      titleTimeoutRef.current = setTimeout(() => {
+        setShowTitle(false)
+      }, 6000)
     } else {
       video.pause()
       setIsPlaying(false)
+      // Clear title timeout when leaving this episode
+      if (titleTimeoutRef.current) {
+        clearTimeout(titleTimeoutRef.current)
+      }
+      setShowTitle(false)
+    }
+
+    return () => {
+      if (titleTimeoutRef.current) {
+        clearTimeout(titleTimeoutRef.current)
+      }
     }
   }, [isActive])
 
@@ -158,7 +180,7 @@ export default function VideoPlayer({
       onClick={handleTap}
     >
       {/* Top Section - Show title and episode */}
-      <div className={`video-player__top ${controlsVisible ? '' : 'video-player__top--hidden'}`}>
+      <div className={`video-player__top ${(showTitle || controlsVisible) ? '' : 'video-player__top--hidden'}`}>
         <span className="video-player__show-title">{title}</span>
         <span className="video-player__episode-title">{episode}</span>
       </div>
