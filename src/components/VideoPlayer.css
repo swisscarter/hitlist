@@ -31,18 +31,18 @@
 
 .video-player__show-title {
   font-family: 'Inter', sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   color: #ffffff;
-  line-height: 1.33;
+  line-height: 20px;
 }
 
 .video-player__episode-title {
   font-family: 'Inter', sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   color: #ffffff;
-  line-height: 1.33;
+  line-height: 20px;
 }
 
 /* ==================== MEDIA AREA ==================== */
