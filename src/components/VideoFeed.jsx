@@ -87,10 +87,24 @@ export default function VideoFeed() {
     // Block if any overlay is shown
     if (showSignIn || showPaywall) return
     
-    if (activeIndex < videos.length - 1) {
-      setActiveIndex(prev => prev + 1)
+    const nextIndex = activeIndex + 1
+    
+    // Check if trying to go past sign-in break (EP 4+ requires sign-in)
+    if (!isSignedIn && nextIndex > SIGN_IN_AFTER_EPISODE) {
+      setShowSignIn(true)
+      return
     }
-  }, [activeIndex, showSignIn, showPaywall])
+    
+    // Check if trying to go past paywall break (EP 7+ requires payment)
+    if (isSignedIn && !hasPaid && nextIndex > PAYWALL_AFTER_EPISODE) {
+      setShowPaywall(true)
+      return
+    }
+    
+    if (activeIndex < videos.length - 1) {
+      setActiveIndex(nextIndex)
+    }
+  }, [activeIndex, showSignIn, showPaywall, isSignedIn, hasPaid])
 
   const goToPrev = useCallback(() => {
     // Block if any overlay is shown
