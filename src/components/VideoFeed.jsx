@@ -56,6 +56,30 @@ const videos = [
     title: 'The Ick', 
     episode: 'When he\'s the main character',
     fit: 'cover'
+  },
+  { 
+    src: '/When he\'s a father.mp4', 
+    title: 'The Ick', 
+    episode: 'When he\'s a father',
+    fit: 'cover'
+  },
+  { 
+    src: '/When you bring him home.mp4', 
+    title: 'The Ick', 
+    episode: 'When you bring him home',
+    fit: 'cover'
+  },
+  { 
+    src: '/When he\'s on aux.mp4', 
+    title: 'The Ick', 
+    episode: 'When he\'s on aux',
+    fit: 'cover'
+  },
+  { 
+    src: '/When he eats.mp4', 
+    title: 'The Ick', 
+    episode: 'When he eats',
+    fit: 'cover'
   }
 ]
 
