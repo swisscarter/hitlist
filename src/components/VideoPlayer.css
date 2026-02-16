@@ -18,38 +18,19 @@
   align-items: flex-start;
   gap: 4px;
   z-index: 5;
-  opacity: 1;
   visibility: visible;
-  animation: titleFadeIn 200ms ease-out forwards;
 }
 
 .video-player__top--hidden {
-  opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  animation: titleFadeOut 200ms ease-out forwards;
 }
 
-@keyframes titleFadeOut {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(30%);
-  }
-}
-
-@keyframes titleFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(30%);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.video-player__top--hidden .video-player__show-title,
+.video-player__top--hidden .video-player__episode-title {
+  opacity: 0;
+  transform: translateY(45%);
+  animation: none;
 }
 
 .video-player__show-title {
@@ -58,14 +39,42 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 20px;
+  opacity: 0;
+  transform: translateY(45%);
+  animation: titleFadeIn 200ms ease-out 1.5s forwards;
 }
 
 .video-player__episode-title {
   font-family: 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   color: #ffffff;
-  line-height: 20px;
+  line-height: 16px;
+  opacity: 0;
+  transform: translateY(45%);
+  animation: episodeFadeIn 200ms ease-out 1.6s forwards;
+}
+
+@keyframes titleFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(45%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes episodeFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(45%);
+  }
+  to {
+    opacity: 0.75;
+    transform: translateY(0);
+  }
 }
 
 /* ==================== MEDIA AREA ==================== */
