@@ -2,11 +2,13 @@ import React, { useState, useRef, useCallback } from 'react'
 import VideoPlayer from './VideoPlayer'
 import SignInOverlay from './SignInOverlay'
 import PaywallOverlay from './PaywallOverlay'
+import FollowOverlay from './FollowOverlay'
 import './VideoFeed.css'
 
 // Episode indices (0-based) where overlays trigger
 const SIGN_IN_AFTER_EPISODE = 2  // After EP 3 (index 2)
 const PAYWALL_AFTER_EPISODE = 5  // After EP 6 (index 5)
+const FOLLOW_AFTER_EPISODE = 9   // After EP 10 (index 9)
 
 const videos = [
   { 
@@ -91,6 +93,8 @@ export default function VideoFeed() {
   const [isSignedIn, setIsSignedIn] = useState(false)
   const [showPaywall, setShowPaywall] = useState(false)
   const [hasPaid, setHasPaid] = useState(false)
+  const [showFollow, setShowFollow] = useState(false)
+  const [hasSeenFollow, setHasSeenFollow] = useState(false)
   const feedRef = useRef(null)
   const touchStartRef = useRef({ x: 0, y: 0 })
   const touchEndRef = useRef({ x: 0, y: 0 })
@@ -109,7 +113,7 @@ export default function VideoFeed() {
 
   const goToNext = useCallback(() => {
     // Block if any overlay is shown
-    if (showSignIn || showPaywall) return
+    if (showSignIn || showPaywall || showFollow) return
     
     const nextIndex = activeIndex + 1
     
@@ -128,16 +132,16 @@ export default function VideoFeed() {
     if (activeIndex < videos.length - 1) {
       setActiveIndex(nextIndex)
     }
-  }, [activeIndex, showSignIn, showPaywall, isSignedIn, hasPaid])
+  }, [activeIndex, showSignIn, showPaywall, showFollow, isSignedIn, hasPaid])
 
   const goToPrev = useCallback(() => {
     // Block if any overlay is shown
-    if (showSignIn || showPaywall) return
+    if (showSignIn || showPaywall || showFollow) return
     
     if (activeIndex > 0) {
       setActiveIndex(prev => prev - 1)
     }
-  }, [activeIndex, showSignIn, showPaywall])
+  }, [activeIndex, showSignIn, showPaywall, showFollow])
 
   // Handle video completion - check for chapter breaks
   const handleVideoEnded = useCallback(() => {
@@ -153,11 +157,17 @@ export default function VideoFeed() {
       return
     }
     
+    // Check if follow overlay should show after EP 10 (index 9)
+    if (!hasSeenFollow && activeIndex === FOLLOW_AFTER_EPISODE) {
+      setShowFollow(true)
+      return
+    }
+    
     // Otherwise go to next video
     if (activeIndex < videos.length - 1) {
       setActiveIndex(prev => prev + 1)
     }
-  }, [activeIndex, isSignedIn, hasPaid])
+  }, [activeIndex, isSignedIn, hasPaid, hasSeenFollow])
 
   // Handle successful sign-in - dismiss overlays and continue
   const handleSignInComplete = useCallback(() => {
@@ -179,10 +189,20 @@ export default function VideoFeed() {
     }
   }, [activeIndex])
 
+  // Handle follow overlay dismiss - continue playback
+  const handleFollowDismiss = useCallback(() => {
+    setShowFollow(false)
+    setHasSeenFollow(true)
+    // Go to next video if available
+    if (activeIndex < videos.length - 1) {
+      setActiveIndex(prev => prev + 1)
+    }
+  }, [activeIndex])
+
   // Handle swipe gestures
   const handleTouchStart = (e) => {
     // Block if any overlay is shown
-    if (showSignIn || showPaywall) return
+    if (showSignIn || showPaywall || showFollow) return
     
     // Don't track swipes on progress bar
     if (e.target.closest('.video-player__progress-bar')) {
@@ -197,7 +217,7 @@ export default function VideoFeed() {
 
   const handleTouchEnd = (e) => {
     // Block if any overlay is shown
-    if (showSignIn || showPaywall) return
+    if (showSignIn || showPaywall || showFollow) return
     
     // Skip if touch started on progress bar
     if (!touchStartRef.current) return
@@ -226,7 +246,7 @@ export default function VideoFeed() {
   // Handle tap on left/right edges for navigation
   const handleTapNavigation = (e) => {
     // Block if any overlay is shown
-    if (showSignIn || showPaywall) return
+    if (showSignIn || showPaywall || showFollow) return
     
     // Don't navigate if interacting with progress bar or bottom controls
     if (e.target.closest('.video-player__progress-bar') || 
@@ -271,7 +291,7 @@ export default function VideoFeed() {
             onShowControls={showControls}
             onHideControls={hideControls}
             onVideoEnded={handleVideoEnded}
-            isActive={activeIndex === index && !showSignIn && !showPaywall}
+            isActive={activeIndex === index && !showSignIn && !showPaywall && !showFollow}
             isMuted={isMuted}
             onToggleMute={toggleMute}
             isSignedIn={isSignedIn}
@@ -279,11 +299,14 @@ export default function VideoFeed() {
         </div>
       ))}
       
-      {/* Sign In Overlay - shown after MAX_FREE_VIDEOS watched */}
+      {/* Sign In Overlay - shown after EP 3 */}
       <SignInOverlay visible={showSignIn} onSignInComplete={handleSignInComplete} />
       
-      {/* Paywall Overlay - shown after VIDEOS_BEFORE_PAYWALL watched (post sign-in) */}
+      {/* Paywall Overlay - shown after EP 6 */}
       <PaywallOverlay visible={showPaywall} onUnlock={handlePaywallUnlock} />
+      
+      {/* Follow Overlay - shown after EP 10 */}
+      <FollowOverlay visible={showFollow} onDismiss={handleFollowDismiss} />
     </div>
   )
 }
