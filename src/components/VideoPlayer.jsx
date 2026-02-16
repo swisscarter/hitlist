@@ -186,7 +186,7 @@ export default function VideoPlayer({
           className="video-player__show-title"
           initial={{ opacity: 0, y: '45%' }}
           animate={(showTitle || controlsVisible) ? { opacity: 1, y: 0 } : { opacity: 0, y: '45%' }}
-          transition={{ duration: 0.2, ease: 'easeOut', delay: (showTitle || controlsVisible) ? 1.5 : 0 }}
+          transition={{ duration: 0.2, ease: 'easeOut', delay: (showTitle || controlsVisible) ? 0.5 : 0 }}
         >
           {title}
         </motion.span>
@@ -194,7 +194,7 @@ export default function VideoPlayer({
           className="video-player__episode-title"
           initial={{ opacity: 0, y: '45%' }}
           animate={(showTitle || controlsVisible) ? { opacity: 0.75, y: 0 } : { opacity: 0, y: '45%' }}
-          transition={{ duration: 0.2, ease: 'easeOut', delay: (showTitle || controlsVisible) ? 1.6 : 0 }}
+          transition={{ duration: 0.2, ease: 'easeOut', delay: (showTitle || controlsVisible) ? 0.6 : 0 }}
         >
           {episode}
         </motion.span>
