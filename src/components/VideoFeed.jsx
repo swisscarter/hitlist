@@ -6,9 +6,9 @@ import FollowOverlay from './FollowOverlay'
 import './VideoFeed.css'
 
 // Episode indices (0-based) where overlays trigger
-const SIGN_IN_AFTER_EPISODE = 2  // After EP 3 (index 2)
-const PAYWALL_AFTER_EPISODE = 5  // After EP 6 (index 5)
-const FOLLOW_AFTER_EPISODE = 9   // After EP 10 (index 9)
+const SIGN_IN_AFTER_EPISODE = 5   // After EP 6 (index 5)
+const PAYWALL_AFTER_EPISODE = 9   // After EP 10 (index 9)
+const FOLLOW_AFTER_EPISODE = 14   // After EP 15 (index 14)
 
 const videos = [
   { src: '/EP1. When he runs it back.mp4', title: 'The Ick', episode: 'When he runs it back', fit: 'cover' },
@@ -75,13 +75,13 @@ export default function VideoFeed() {
     
     const nextIndex = activeIndex + 1
     
-    // Check if trying to go past sign-in break (EP 4+ requires sign-in)
+    // Check if trying to go past sign-in break (EP 7+ requires sign-in)
     if (!isSignedIn && nextIndex > SIGN_IN_AFTER_EPISODE) {
       setShowSignIn(true)
       return
     }
     
-    // Check if trying to go past paywall break (EP 7+ requires payment)
+    // Check if trying to go past paywall break (EP 11+ requires payment)
     if (isSignedIn && !hasPaid && nextIndex > PAYWALL_AFTER_EPISODE) {
       setShowPaywall(true)
       return
@@ -103,19 +103,19 @@ export default function VideoFeed() {
 
   // Handle video completion - check for chapter breaks
   const handleVideoEnded = useCallback(() => {
-    // Check if sign-in required after EP 3 (index 2)
+    // Check if sign-in required after EP 6 (index 5)
     if (!isSignedIn && activeIndex === SIGN_IN_AFTER_EPISODE) {
       setShowSignIn(true)
       return
     }
     
-    // Check if paywall required after EP 6 (index 5)
+    // Check if paywall required after EP 10 (index 9)
     if (isSignedIn && !hasPaid && activeIndex === PAYWALL_AFTER_EPISODE) {
       setShowPaywall(true)
       return
     }
     
-    // Check if follow overlay should show after EP 10 (index 9)
+    // Check if follow overlay should show after EP 15 (index 14)
     if (!hasSeenFollow && activeIndex === FOLLOW_AFTER_EPISODE) {
       setShowFollow(true)
       return
@@ -257,13 +257,13 @@ export default function VideoFeed() {
         </div>
       ))}
       
-      {/* Sign In Overlay - shown after EP 3 */}
+      {/* Sign In Overlay - shown after EP 6 */}
       <SignInOverlay visible={showSignIn} onSignInComplete={handleSignInComplete} />
       
-      {/* Paywall Overlay - shown after EP 6 */}
+      {/* Paywall Overlay - shown after EP 10 */}
       <PaywallOverlay visible={showPaywall} onUnlock={handlePaywallUnlock} />
       
-      {/* Follow Overlay - shown after EP 10 */}
+      {/* Follow Overlay - shown after EP 15 */}
       <FollowOverlay visible={showFollow} onDismiss={handleFollowDismiss} />
     </div>
   )
