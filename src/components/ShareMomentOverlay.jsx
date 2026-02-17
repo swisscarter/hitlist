@@ -1,51 +1,62 @@
-import React from 'react'
+import React, { useState } from 'react'
+import ShareSheet from './ShareSheet'
 import './ShareMomentOverlay.css'
 
 export default function ShareMomentOverlay({ visible, onContinue }) {
+  const [showShareSheet, setShowShareSheet] = useState(false)
+
   if (!visible) return null
 
-  const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: 'The Ick',
-          text: 'Check out The Ick!',
-          url: window.location.href
-        })
-      } catch (e) {
-        // User cancelled or share failed silently
-      }
-    }
+  const handleShareClick = () => {
+    setShowShareSheet(true)
+  }
+
+  const handleShareSheetClose = () => {
+    setShowShareSheet(false)
+  }
+
+  const handleShareComplete = () => {
+    setShowShareSheet(false)
+    onContinue?.()
   }
 
   return (
     <div className="share-moment-overlay">
-      <div className="share-moment-overlay__sheet">
-        <div className="share-moment-overlay__content">
-          {/* Message */}
-          <div className="share-moment-overlay__text-content">
-            <h2 className="share-moment-overlay__headline">
-              Continue to Chapter 3{'\n'}of 'The Ick'?
-            </h2>
-          </div>
+      {!showShareSheet && (
+        <div className="share-moment-overlay__sheet">
+          <div className="share-moment-overlay__content">
+            {/* Message */}
+            <div className="share-moment-overlay__text-content">
+              <h2 className="share-moment-overlay__headline">
+                Continue to Chapter 3{'\n'}of 'The Ick'?
+              </h2>
+            </div>
 
-          {/* Actions */}
-          <div className="share-moment-overlay__actions">
-            <button
-              className="share-moment-overlay__cta share-moment-overlay__cta--primary"
-              onClick={onContinue}
-            >
-              Continue watching
-            </button>
-            <button
-              className="share-moment-overlay__cta share-moment-overlay__cta--secondary"
-              onClick={handleShare}
-            >
-              Share a moment
-            </button>
+            {/* Actions */}
+            <div className="share-moment-overlay__actions">
+              <button
+                className="share-moment-overlay__cta share-moment-overlay__cta--primary"
+                onClick={onContinue}
+              >
+                Continue watching
+              </button>
+              <button
+                className="share-moment-overlay__cta share-moment-overlay__cta--secondary"
+                onClick={handleShareClick}
+              >
+                Share a moment
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
+
+      {/* iOS Share Sheet */}
+      <ShareSheet
+        visible={showShareSheet}
+        onClose={handleShareSheetClose}
+        onShareComplete={handleShareComplete}
+      />
     </div>
   )
 }
