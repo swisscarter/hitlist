@@ -59,28 +59,6 @@
   }
 }
 
-/* Show Details */
-.paywall-overlay__show-details {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-
-/* Thumbnail */
-.paywall-overlay__thumbnail {
-  width: 109px;
-  height: 118px;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.paywall-overlay__thumbnail-placeholder {
-  width: 100%;
-  height: 100%;
-  background-color: #3a3a3a;
-}
-
 /* Text Content */
 .paywall-overlay__text-content {
   display: flex;

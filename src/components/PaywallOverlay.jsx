@@ -32,14 +32,6 @@ export default function PaywallOverlay({ visible, onUnlock }) {
       {!showSuccess && (
         <div className="paywall-overlay__sheet">
           <div className="paywall-overlay__content">
-            {/* Show Details */}
-            <div className="paywall-overlay__show-details">
-              {/* Thumbnail */}
-              <div className="paywall-overlay__thumbnail">
-                <div className="paywall-overlay__thumbnail-placeholder" />
-              </div>
-            </div>
-
             {/* Main Content */}
             <div className="paywall-overlay__text-content">
               <h2 className="paywall-overlay__headline">Think you knew them? You just haven't seen this version, yet.</h2>
