@@ -1,0 +1,120 @@
+/* Share Moment Overlay */
+.share-moment-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 100;
+  animation: shareMomentFadeIn 150ms ease-out forwards;
+}
+
+@keyframes shareMomentFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.share-moment-overlay__sheet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
+}
+
+.share-moment-overlay__content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 24px;
+  padding: 32px;
+  padding-bottom: max(32px, env(safe-area-inset-bottom));
+  animation: shareMomentSlideUp 150ms ease-out forwards;
+}
+
+@keyframes shareMomentSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Text Content */
+.share-moment-overlay__text-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.share-moment-overlay__headline {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1.4;
+  text-align: center;
+  margin: 0;
+  white-space: pre-line;
+}
+
+/* Actions */
+.share-moment-overlay__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 265px;
+}
+
+.share-moment-overlay__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.43;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.share-moment-overlay__cta:active {
+  transform: scale(0.97);
+  opacity: 0.9;
+}
+
+.share-moment-overlay__cta--primary {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.share-moment-overlay__cta--secondary {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}

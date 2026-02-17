@@ -3,12 +3,14 @@ import VideoPlayer from './VideoPlayer'
 import SignInOverlay from './SignInOverlay'
 import PaywallOverlay from './PaywallOverlay'
 import FollowOverlay from './FollowOverlay'
+import ShareMomentOverlay from './ShareMomentOverlay'
 import './VideoFeed.css'
 
 // Episode indices (0-based) where overlays trigger
-const SIGN_IN_AFTER_EPISODE = 5   // After EP 6 (index 5)
-const PAYWALL_AFTER_EPISODE = 9   // After EP 10 (index 9)
-const FOLLOW_AFTER_EPISODE = 14   // After EP 15 (index 14)
+const SIGN_IN_AFTER_EPISODE = 5    // After EP 6 (index 5)
+const PAYWALL_AFTER_EPISODE = 9    // After EP 10 (index 9)
+const SHARE_MOMENT_AFTER_EPISODE = 14  // After EP 15 (index 14)
+const FOLLOW_AFTER_EPISODE = 18    // After EP 19 (index 18)
 
 const videos = [
   { src: '/EP1. When he runs it back.mp4', title: 'The Ick', episode: 'When he runs it back', fit: 'cover' },
@@ -51,6 +53,8 @@ export default function VideoFeed() {
   const [isSignedIn, setIsSignedIn] = useState(false)
   const [showPaywall, setShowPaywall] = useState(false)
   const [hasPaid, setHasPaid] = useState(false)
+  const [showShareMoment, setShowShareMoment] = useState(false)
+  const [hasSeenShareMoment, setHasSeenShareMoment] = useState(false)
   const [showFollow, setShowFollow] = useState(false)
   const [hasSeenFollow, setHasSeenFollow] = useState(false)
   const feedRef = useRef(null)
@@ -71,7 +75,7 @@ export default function VideoFeed() {
 
   const goToNext = useCallback(() => {
     // Block if any overlay is shown
-    if (showSignIn || showPaywall || showFollow) return
+    if (showSignIn || showPaywall || showShareMoment || showFollow) return
     
     const nextIndex = activeIndex + 1
     
@@ -90,16 +94,16 @@ export default function VideoFeed() {
     if (activeIndex < videos.length - 1) {
       setActiveIndex(nextIndex)
     }
-  }, [activeIndex, showSignIn, showPaywall, showFollow, isSignedIn, hasPaid])
+  }, [activeIndex, showSignIn, showPaywall, showShareMoment, showFollow, isSignedIn, hasPaid])
 
   const goToPrev = useCallback(() => {
     // Block if any overlay is shown
-    if (showSignIn || showPaywall || showFollow) return
+    if (showSignIn || showPaywall || showShareMoment || showFollow) return
     
     if (activeIndex > 0) {
       setActiveIndex(prev => prev - 1)
     }
-  }, [activeIndex, showSignIn, showPaywall, showFollow])
+  }, [activeIndex, showSignIn, showPaywall, showShareMoment, showFollow])
 
   // Handle video completion - check for chapter breaks
   const handleVideoEnded = useCallback(() => {
@@ -115,7 +119,13 @@ export default function VideoFeed() {
       return
     }
     
-    // Check if follow overlay should show after EP 15 (index 14)
+    // Check if share moment overlay should show after EP 15 (index 14)
+    if (!hasSeenShareMoment && activeIndex === SHARE_MOMENT_AFTER_EPISODE) {
+      setShowShareMoment(true)
+      return
+    }
+    
+    // Check if follow overlay should show after EP 19 (index 18)
     if (!hasSeenFollow && activeIndex === FOLLOW_AFTER_EPISODE) {
       setShowFollow(true)
       return
@@ -125,7 +135,7 @@ export default function VideoFeed() {
     if (activeIndex < videos.length - 1) {
       setActiveIndex(prev => prev + 1)
     }
-  }, [activeIndex, isSignedIn, hasPaid, hasSeenFollow])
+  }, [activeIndex, isSignedIn, hasPaid, hasSeenShareMoment, hasSeenFollow])
 
   // Handle successful sign-in - dismiss overlays and continue
   const handleSignInComplete = useCallback(() => {
@@ -147,6 +157,16 @@ export default function VideoFeed() {
     }
   }, [activeIndex])
 
+  // Handle share moment continue - dismiss and continue playback
+  const handleShareMomentContinue = useCallback(() => {
+    setShowShareMoment(false)
+    setHasSeenShareMoment(true)
+    // Go to next video if available
+    if (activeIndex < videos.length - 1) {
+      setActiveIndex(prev => prev + 1)
+    }
+  }, [activeIndex])
+
   // Handle follow overlay dismiss - continue playback
   const handleFollowDismiss = useCallback(() => {
     setShowFollow(false)
@@ -160,7 +180,7 @@ export default function VideoFeed() {
   // Handle swipe gestures
   const handleTouchStart = (e) => {
     // Block if any overlay is shown
-    if (showSignIn || showPaywall || showFollow) return
+    if (showSignIn || showPaywall || showShareMoment || showFollow) return
     
     // Don't track swipes on progress bar
     if (e.target.closest('.video-player__progress-bar')) {
@@ -175,7 +195,7 @@ export default function VideoFeed() {
 
   const handleTouchEnd = (e) => {
     // Block if any overlay is shown
-    if (showSignIn || showPaywall || showFollow) return
+    if (showSignIn || showPaywall || showShareMoment || showFollow) return
     
     // Skip if touch started on progress bar
     if (!touchStartRef.current) return
@@ -204,7 +224,7 @@ export default function VideoFeed() {
   // Handle tap on left/right edges for navigation
   const handleTapNavigation = (e) => {
     // Block if any overlay is shown
-    if (showSignIn || showPaywall || showFollow) return
+    if (showSignIn || showPaywall || showShareMoment || showFollow) return
     
     // Don't navigate if interacting with progress bar or bottom controls
     if (e.target.closest('.video-player__progress-bar') || 
@@ -249,7 +269,7 @@ export default function VideoFeed() {
             onShowControls={showControls}
             onHideControls={hideControls}
             onVideoEnded={handleVideoEnded}
-            isActive={activeIndex === index && !showSignIn && !showPaywall && !showFollow}
+            isActive={activeIndex === index && !showSignIn && !showPaywall && !showShareMoment && !showFollow}
             isMuted={isMuted}
             onToggleMute={toggleMute}
             isSignedIn={isSignedIn}
@@ -263,7 +283,10 @@ export default function VideoFeed() {
       {/* Paywall Overlay - shown after EP 10 */}
       <PaywallOverlay visible={showPaywall} onUnlock={handlePaywallUnlock} />
       
-      {/* Follow Overlay - shown after EP 15 */}
+      {/* Share Moment Overlay - shown after EP 15 */}
+      <ShareMomentOverlay visible={showShareMoment} onContinue={handleShareMomentContinue} />
+      
+      {/* Follow Overlay - shown after EP 19 */}
       <FollowOverlay visible={showFollow} onDismiss={handleFollowDismiss} />
     </div>
   )
