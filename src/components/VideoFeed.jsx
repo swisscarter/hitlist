@@ -45,7 +45,7 @@ const videos = [
 
 export default function VideoFeed() {
   const [controlsVisible, setControlsVisible] = useState(true)
-  const [activeIndex, setActiveIndex] = useState(0)
+  const [activeIndex, setActiveIndex] = useState(3) // Start on EP 4
   const [isMuted, setIsMuted] = useState(true) // Start with sound off
   const [showSignIn, setShowSignIn] = useState(false)
   const [isSignedIn, setIsSignedIn] = useState(false)
