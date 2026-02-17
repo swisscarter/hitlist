@@ -15,7 +15,7 @@ export default function FollowOverlay({ visible, onDismiss }) {
 
           {/* Message */}
           <div className="follow-overlay__message">
-            <p>Follow The Lineup on TikTok for exclusive clips.</p>
+            <p>Follow 'The Ick' on TikTok for exclusive clips.</p>
           </div>
 
           {/* Actions */}

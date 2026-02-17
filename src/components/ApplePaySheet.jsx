@@ -82,7 +82,7 @@ export default function ApplePaySheet({ visible, onClose, onComplete }) {
         <div className="applepay-sheet__bottom">
           {/* Price */}
           <div className="applepay-sheet__price">
-            <span className="applepay-sheet__price-label">'The Ick' chapter 2</span>
+            <span className="applepay-sheet__price-label">'The Ick' all chapters</span>
             <div className="applepay-sheet__price-amount">
               <span className="applepay-sheet__price-currency">$</span>
               <span className="applepay-sheet__price-value">2.99</span>
