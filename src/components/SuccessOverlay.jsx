@@ -17,11 +17,9 @@ export default function SuccessOverlay({ visible, onContinue }) {
 
           {/* Text Content */}
           <div className="success-overlay__text-content">
-            <h2 className="success-overlay__headline">Chapter 2 unlocked</h2>
+            <h2 className="success-overlay__headline">All chapters unlocked!</h2>
             <p className="success-overlay__description">
-              You can now watch all episodes
-              <br />
-              chapter 2 of 'The Ick.'
+              You can now watch all episodes of ‘The Ick’.
             </p>
           </div>
 

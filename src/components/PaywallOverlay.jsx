@@ -34,7 +34,7 @@ export default function PaywallOverlay({ visible, onUnlock }) {
           <div className="paywall-overlay__content">
             {/* Main Content */}
             <div className="paywall-overlay__text-content">
-              <h2 className="paywall-overlay__headline">Think you knew them? You just haven't seen this version, yet.</h2>
+              <h2 className="paywall-overlay__headline">Think you knew them? Not this side, yet.</h2>
               <p className="paywall-overlay__subtext">20 more episodes</p>
             </div>
 
