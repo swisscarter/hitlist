@@ -21,14 +21,10 @@ export default function VideoPlayer({
   const [isPlaying, setIsPlaying] = useState(true)
   const [isSeeking, setIsSeeking] = useState(false)
   const [showTitle, setShowTitle] = useState(false)
-  const [scrubMode, setScrubMode] = useState(null) // 'forward' | 'rewind' | null
   const videoRef = useRef(null)
   const hideTimeoutRef = useRef(null)
   const titleTimeoutRef = useRef(null)
   const progressBarRef = useRef(null)
-  const holdTimerRef = useRef(null)
-  const scrubIntervalRef = useRef(null)
-  const pointerDownRef = useRef(null)
 
   // Handle active state - play/pause and restart based on visibility
   useEffect(() => {
@@ -98,91 +94,26 @@ export default function VideoPlayer({
     }
   }, [controlsVisible, onHideControls])
 
-  // Clean up scrub mode
-  const stopScrubbing = useCallback(() => {
-    if (holdTimerRef.current) {
-      clearTimeout(holdTimerRef.current)
-      holdTimerRef.current = null
-    }
-    if (scrubIntervalRef.current) {
-      clearInterval(scrubIntervalRef.current)
-      scrubIntervalRef.current = null
-    }
-    const video = videoRef.current
-    if (video && scrubMode) {
-      video.playbackRate = 1
-      if (video.paused && isPlaying) {
-        video.play().catch(() => {})
-      }
-    }
-    setScrubMode(null)
-    pointerDownRef.current = null
-  }, [scrubMode, isPlaying])
-
-  // Handle pointer down - start hold timer
-  const handlePointerDown = useCallback((e) => {
+  // Handle tap to play/pause
+  const handleTap = useCallback((e) => {
+    // Don't toggle if clicking on controls
     if (e.target.closest('.video-player__bottom') || e.target.closest('.video-player__progress-bar')) {
       return
     }
+    
+    const video = videoRef.current
+    if (!video) return
 
-    const rect = e.currentTarget.getBoundingClientRect()
-    const x = (e.clientX || e.touches?.[0]?.clientX) - rect.left
-    const side = x > rect.width / 2 ? 'forward' : 'rewind'
-
-    pointerDownRef.current = { side, time: Date.now() }
-
-    holdTimerRef.current = setTimeout(() => {
-      const video = videoRef.current
-      if (!video) return
-
-      setScrubMode(side)
-
-      if (side === 'forward') {
-        video.playbackRate = 2
-      } else {
-        video.pause()
-        scrubIntervalRef.current = setInterval(() => {
-          if (video.currentTime > 0.2) {
-            video.currentTime -= 0.2
-          } else {
-            video.currentTime = 0
-          }
-        }, 50)
-      }
-    }, 300)
-  }, [])
-
-  // Handle pointer up - stop scrubbing or treat as tap
-  const handlePointerUp = useCallback((e) => {
-    const wasHolding = scrubMode !== null
-
-    stopScrubbing()
-
-    // If it was a short press (not a hold), treat as tap to play/pause
-    if (!wasHolding && pointerDownRef.current) {
-      if (e.target.closest('.video-player__bottom') || e.target.closest('.video-player__progress-bar')) {
-        return
-      }
-      const video = videoRef.current
-      if (!video) return
-
-      if (video.paused) {
-        video.play().then(() => setIsPlaying(true)).catch(() => {})
-      } else {
-        video.pause()
-        setIsPlaying(false)
-      }
-      onShowControls()
+    if (video.paused) {
+      video.play().then(() => setIsPlaying(true)).catch(() => {})
+    } else {
+      video.pause()
+      setIsPlaying(false)
     }
-  }, [scrubMode, stopScrubbing, onShowControls])
 
-  // Clean up on unmount or when becoming inactive
-  useEffect(() => {
-    if (!isActive) {
-      stopScrubbing()
-    }
-    return () => stopScrubbing()
-  }, [isActive, stopScrubbing])
+    // Show controls on tap
+    onShowControls()
+  }, [onShowControls])
 
   // Handle progress bar seeking
   const handleProgressBarClick = (e) => {
@@ -247,19 +178,8 @@ export default function VideoPlayer({
   return (
     <div 
       className="video-player"
-      onPointerDown={handlePointerDown}
-      onPointerUp={handlePointerUp}
-      onPointerLeave={stopScrubbing}
-      onTouchStart={handlePointerDown}
-      onTouchEnd={handlePointerUp}
+      onClick={handleTap}
     >
-      {/* Scrub indicator */}
-      {scrubMode && (
-        <div className={`video-player__scrub-indicator video-player__scrub-indicator--${scrubMode}`}>
-          <span>{scrubMode === 'forward' ? '2x \u25B6\u25B6' : '\u25C0\u25C0 2x'}</span>
-        </div>
-      )}
-
       {/* Top Section - Show title and episode */}
       <div className={`video-player__top ${(showTitle || controlsVisible) ? '' : 'video-player__top--hidden'}`}>
         <motion.span 

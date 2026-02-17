@@ -152,44 +152,6 @@
   line-height: 1.2;
 }
 
-/* ==================== SCRUB INDICATOR ==================== */
-.video-player__scrub-indicator {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 16px;
-  border-radius: 8px;
-  background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  animation: scrubFadeIn 150ms ease-out forwards;
-}
-
-.video-player__scrub-indicator--forward {
-  right: 24px;
-}
-
-.video-player__scrub-indicator--rewind {
-  left: 24px;
-}
-
-.video-player__scrub-indicator span {
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: #ffffff;
-  letter-spacing: 0.5px;
-}
-
-@keyframes scrubFadeIn {
-  from { opacity: 0; transform: translateY(-50%) scale(0.9); }
-  to { opacity: 1; transform: translateY(-50%) scale(1); }
-}
-
 /* ==================== PROGRESS BAR ==================== */
 .video-player__progress-bar {
   position: absolute;
