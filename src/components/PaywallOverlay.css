@@ -144,6 +144,11 @@
   color: #000000;
 }
 
+.paywall-overlay__btn--secondary {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
 /* Divider */
 .paywall-overlay__divider {
   display: flex;
@@ -165,32 +170,5 @@
   font-weight: 600;
   color: rgba(255, 255, 255, 0.4);
   line-height: 1.67;
-}
-
-/* Share CTA */
-.paywall-overlay__share {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.paywall-overlay__share-title {
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.7);
-  line-height: 1.33;
-  text-align: center;
-  margin: 0;
-}
-
-.paywall-overlay__share-desc {
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.5);
-  line-height: 1.33;
-  text-align: center;
-  margin: 0;
+  white-space: nowrap;
 }
