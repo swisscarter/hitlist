@@ -91,10 +91,22 @@ export default function VideoFeed() {
       return
     }
     
+    // Check if trying to go past share moment break (after EP 15)
+    if (!hasSeenShareMoment && nextIndex > SHARE_MOMENT_AFTER_EPISODE) {
+      setShowShareMoment(true)
+      return
+    }
+    
+    // Check if trying to go past follow break (after EP 19)
+    if (!hasSeenFollow && nextIndex > FOLLOW_AFTER_EPISODE) {
+      setShowFollow(true)
+      return
+    }
+    
     if (activeIndex < videos.length - 1) {
       setActiveIndex(nextIndex)
     }
-  }, [activeIndex, showSignIn, showPaywall, showShareMoment, showFollow, isSignedIn, hasPaid])
+  }, [activeIndex, showSignIn, showPaywall, showShareMoment, showFollow, isSignedIn, hasPaid, hasSeenShareMoment, hasSeenFollow])
 
   const goToPrev = useCallback(() => {
     // Block if any overlay is shown
