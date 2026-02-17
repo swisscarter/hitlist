@@ -11,78 +11,36 @@ const PAYWALL_AFTER_EPISODE = 5  // After EP 6 (index 5)
 const FOLLOW_AFTER_EPISODE = 9   // After EP 10 (index 9)
 
 const videos = [
-  { 
-    src: '/When he can\'t connect.mp4', 
-    title: 'The Ick', 
-    episode: 'When he can\'t connect',
-    fit: 'cover'
-  },
-  { 
-    src: '/When he has an art.mp4', 
-    title: 'The Ick', 
-    episode: 'When he has an art',
-    fit: 'cover'
-  },
-  { 
-    src: '/When he loves to ski.mp4', 
-    title: 'The Ick', 
-    episode: 'When he loves to ski',
-    fit: 'cover'
-  },
-  { 
-    src: '/When he makes a sound.mp4', 
-    title: 'The Ick', 
-    episode: 'When he makes a sound',
-    fit: 'cover'
-  },
-  { 
-    src: '/When he runs it back.mp4', 
-    title: 'The Ick', 
-    episode: 'When he runs it back',
-    fit: 'cover'
-  },
-  { 
-    src: '/When he seeks professional help.mp4', 
-    title: 'The Ick', 
-    episode: 'When he seeks professional help',
-    fit: 'cover'
-  },
-  { 
-    src: '/When he\'s packing.mp4', 
-    title: 'The Ick', 
-    episode: 'When he\'s packing',
-    fit: 'cover'
-  },
-  { 
-    src: '/When he\'s the main character.mp4', 
-    title: 'The Ick', 
-    episode: 'When he\'s the main character',
-    fit: 'cover'
-  },
-  { 
-    src: '/When he\'s a father.mp4', 
-    title: 'The Ick', 
-    episode: 'When he\'s a father',
-    fit: 'cover'
-  },
-  { 
-    src: '/When you bring him home.mp4', 
-    title: 'The Ick', 
-    episode: 'When you bring him home',
-    fit: 'cover'
-  },
-  { 
-    src: '/When he\'s on aux.mp4', 
-    title: 'The Ick', 
-    episode: 'When he\'s on aux',
-    fit: 'cover'
-  },
-  { 
-    src: '/When he eats.mp4', 
-    title: 'The Ick', 
-    episode: 'When he eats',
-    fit: 'cover'
-  }
+  { src: '/EP1. When he runs it back.mp4', title: 'The Ick', episode: 'When he runs it back', fit: 'cover' },
+  { src: '/EP2. When he eats.mp4', title: 'The Ick', episode: 'When he eats', fit: 'cover' },
+  { src: '/EP3. When he\'s the main character.mp4', title: 'The Ick', episode: 'When he\'s the main character', fit: 'cover' },
+  { src: '/EP4. When he can\'t connect.mp4', title: 'The Ick', episode: 'When he can\'t connect', fit: 'cover' },
+  { src: '/EP5. When he has an art.mp4', title: 'The Ick', episode: 'When he has an art', fit: 'cover' },
+  { src: '/EP6. When he loves to ski.mp4', title: 'The Ick', episode: 'When he loves to ski', fit: 'cover' },
+  { src: '/EP7. When he makes a sound.mp4', title: 'The Ick', episode: 'When he makes a sound', fit: 'cover' },
+  { src: '/EP8. When he seeks professional help.mp4', title: 'The Ick', episode: 'When he seeks professional help', fit: 'cover' },
+  { src: '/EP9. When he\'s a father.mp4', title: 'The Ick', episode: 'When he\'s a father', fit: 'cover' },
+  { src: '/EP10. When he\'s on aux.mp4', title: 'The Ick', episode: 'When he\'s on aux', fit: 'cover' },
+  { src: '/EP11. When he\'s packing.mp4', title: 'The Ick', episode: 'When he\'s packing', fit: 'cover' },
+  { src: '/EP12. When you bring him home.mp4', title: 'The Ick', episode: 'When you bring him home', fit: 'cover' },
+  { src: '/EP13. When he took the red pill.mp4', title: 'The Ick', episode: 'When he took the red pill', fit: 'cover' },
+  { src: '/EP14. When he\'s prepared.mp4', title: 'The Ick', episode: 'When he\'s prepared', fit: 'cover' },
+  { src: '/EP15. When he has sisters.mp4', title: 'The Ick', episode: 'When he has sisters', fit: 'cover' },
+  { src: '/EP16. When he talks politics.mp4', title: 'The Ick', episode: 'When he talks politics', fit: 'cover' },
+  { src: '/EP17. When he\'s being himself.mp4', title: 'The Ick', episode: 'When he\'s being himself', fit: 'cover' },
+  { src: '/EP18. When he eats prepared meals.mp4', title: 'The Ick', episode: 'When he eats prepared meals', fit: 'cover' },
+  { src: '/EP19. When she calls it fate.mp4', title: 'The Ick', episode: 'When she calls it fate', fit: 'cover' },
+  { src: '/EP20. When he loves dogs.mp4', title: 'The Ick', episode: 'When he loves dogs', fit: 'cover' },
+  { src: '/EP21. When he\'s impatient.mp4', title: 'The Ick', episode: 'When he\'s impatient', fit: 'cover' },
+  { src: '/EP22. When he dreams.mp4', title: 'The Ick', episode: 'When he dreams', fit: 'cover' },
+  { src: '/EP23. When she\'s too comfortable.mp4', title: 'The Ick', episode: 'When she\'s too comfortable', fit: 'cover' },
+  { src: '/EP24. When he\'s in a band.mp4', title: 'The Ick', episode: 'When he\'s in a band', fit: 'cover' },
+  { src: '/EP25. When he takes his shoes off.mp4', title: 'The Ick', episode: 'When he takes his shoes off', fit: 'cover' },
+  { src: '/EP26. When he powers up too loud.mp4', title: 'The Ick', episode: 'When he powers up too loud', fit: 'cover' },
+  { src: '/EP27. When he can\'t read the menu.mp4', title: 'The Ick', episode: 'When he can\'t read the menu', fit: 'cover' },
+  { src: '/EP28. When he thinks it\'s a beach.mp4', title: 'The Ick', episode: 'When he thinks it\'s a beach', fit: 'cover' },
+  { src: '/EP29. When he shaves his beard.mp4', title: 'The Ick', episode: 'When he shaves his beard', fit: 'cover' },
+  { src: '/EP30. When he starts rationing.mp4', title: 'The Ick', episode: 'When he starts rationing', fit: 'cover' },
 ]
 
 export default function VideoFeed() {
